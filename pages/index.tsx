@@ -1,6 +1,7 @@
 import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
+import Loader from "../components/Loader"
 import NavBar from "../components/NavBar"
 import styles from "../styles/Home.module.css"
 
@@ -9,14 +10,15 @@ export default function Home() {
     <div className={styles.container}>
       <NavBar />
       <Link
-        prefetch={true}
+        prefetch={false}
         href={{
           pathname: "/[username]",
           query: { username: "sreehari" },
         }}
       >
-        <a>Sreehari's Profile</a>
+        Sreehari's Profile
       </Link>
+      <Loader show={true} />
     </div>
   )
 }
