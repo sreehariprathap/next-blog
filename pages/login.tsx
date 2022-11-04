@@ -11,9 +11,6 @@ const Login = (props: any) => {
     <>
       <main className="flex justify-center items-center mt-10">
         <div className="card  bg-slate-100 shadow-md xsm:w-10/12 lg:w-5/12 h-[50vh] p-10 flex justify-evenly">
-          <h2 className="text-black text-center xsm:text-xl lg:text-3xl font-light">
-            Click below to login{" "}
-          </h2>
           <div className="flex justify-center">
             {user ? (
               !username ? (
@@ -44,12 +41,17 @@ const SignInButton = () => {
       })
   }
   return (
-    <button className="btn" onClick={signInWithGoogle}>
-      <img
-        src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
-        className="w-10 h-10"
-      />
-    </button>
+    <div className="flex flex-col justify-center items-center gap-5">
+      <h2 className="text-black text-center xsm:text-xl lg:text-3xl font-light">
+        Click below to login{" "}
+      </h2>
+      <button className="btn" onClick={signInWithGoogle}>
+        <img
+          src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+          className="w-10 h-10"
+        />
+      </button>
+    </div>
   )
 }
 //sign out button

@@ -7,6 +7,8 @@ import { UserContext } from "../lib/context"
 
 const NavBar = () => {
   const { user, username } = useContext(UserContext)
+  console.log(user)
+  console.log(username)
   return (
     <nav className="flex justify-between items-center px-5 shadow-md">
       <div className="flex gap-5 justify-center items-center">
@@ -27,7 +29,7 @@ const NavBar = () => {
       </div>
       <div className="flex gap-5">
         {/* user is signed in and has username  */}
-        {username && (
+        {user && (
           <>
             <div>
               <button className="xsm:hidden lg:btn bg-transparent border-none text-black hover:text-purple-700 hover:bg-purple-100">
@@ -68,7 +70,7 @@ const NavBar = () => {
           </>
         )}
         {/* user is not signed in or has no username  */}
-        {!username && (
+        {!user && (
           <>
             <div className="flex gap-2">
               <Link href={"/login"}>
