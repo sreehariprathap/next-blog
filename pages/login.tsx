@@ -1,8 +1,11 @@
 import { GoogleAuthProvider, signOut, signInWithPopup } from "firebase/auth"
-import React, { useContext } from "react"
+import { doc, getDoc, writeBatch } from "firebase/firestore"
+import React, { useCallback, useContext, useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { UserContext } from "../lib/context"
-import { auth, provider } from "../lib/firebase"
+import { auth, db, provider } from "../lib/firebase"
+import { debounce } from "lodash"
+import { async } from "@firebase/util"
 
 const Login = (props: any) => {
   const { user, username } = useContext(UserContext)
@@ -32,11 +35,8 @@ const Login = (props: any) => {
 const SignInButton = () => {
   const signInWithGoogle = async () => {
     await signInWithPopup(auth, provider)
-      .then((result: any) => {
-        console.log(result)
-      })
+      .then((result: any) => {})
       .catch((err) => {
-        console.log(err)
         toast.error(err.message)
       })
   }
@@ -59,12 +59,8 @@ const SignOutButton = () => {
   return (
     <button
       type="button"
-      className="btn btn-error"
-      onClick={() =>
-        signOut(auth).then(() => {
-          console.log("success")
-        })
-      }
+      className="btn btn-error bg-red-600 text-white"
+      onClick={() => signOut(auth)}
     >
       sign out
     </button>
@@ -72,7 +68,94 @@ const SignOutButton = () => {
 }
 // if user signed in but missing username ?
 const UsernameForm = () => {
-  return <></>
+  const [formValue, setFormValue] = useState("")
+  const [isValid, setIsValid] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const { user, username } = useContext(UserContext)
+
+  useEffect(() => {
+    checkUserName(formValue)
+  }, [formValue])
+
+  const handleOnchange = (e: any) => {
+    const val = e.target.value.toLowerCase()
+    const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/
+    if (val.length < 3) {
+      setFormValue(val)
+      setLoading(false)
+      setIsValid(false)
+    }
+    if (re.test(val)) {
+      setFormValue(val)
+      setLoading(true)
+      setIsValid(false)
+    }
+  }
+  // check database for username change after debounce change
+  const checkUserName = useCallback(
+    debounce(async (username: any) => {
+      if (username.length > 3) {
+        const ref = doc(db, `usernames`, username)
+        const docSnap = await getDoc(ref)
+        console.log("firestore read executed")
+        setIsValid(!docSnap.exists())
+        setLoading(false)
+      }
+    }, 500),
+    []
+  )
+
+  const onSubmit = async (e: any) => {
+    e.preventDefault()
+
+    const batch = writeBatch(db)
+    //add both user and username to firestore
+    const userDoc = doc(db, "users", user.uid)
+    const userNameDoc = doc(db, "usernames", formValue)
+
+    //commit both user and username to firestore
+    batch.set(userDoc, {
+      username: formValue,
+      photoURL: user.photoURL,
+      displayName: user.displayName,
+    })
+    batch.set(userNameDoc, { uid: user.uid })
+    await batch.commit()
+  }
+
+  return (
+    <>
+      <section className="flex flex-col gap-5">
+        <h2 className="text-black text-center xsm:text-xl lg:text-3xl font-light">
+          Choose your username
+        </h2>
+        <form onSubmit={onSubmit}>
+          <div className="flex gap-3">
+            <input
+              type="text"
+              placeholder="Enter your username"
+              className={`input ${
+                formValue.length ? (!isValid ? "input-secondary" : "") : ""
+              } w-full max-w-xs`}
+              onChange={handleOnchange}
+              value={formValue}
+            />
+            <button className="btn btn-success" disabled={!isValid}>
+              Save
+            </button>
+          </div>
+        </form>
+        <div>
+          {formValue.length
+            ? !isValid
+              ? "the username is not available"
+              : ""
+            : ""}
+        </div>
+      </section>
+    </>
+  )
 }
 
 export default Login
