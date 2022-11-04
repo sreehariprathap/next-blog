@@ -1,18 +1,21 @@
 import Link from "next/link"
-import React from "react"
+import React, { useContext } from "react"
 import { BellIcon, PlusIcon } from "@heroicons/react/24/solid"
 import { signOut } from "firebase/auth"
 import { auth } from "../lib/firebase"
+import { UserContext } from "../lib/context"
 
 const NavBar = () => {
-  const { user, username }: any = {}
+  const { user, username } = useContext(UserContext)
   return (
     <nav className="flex justify-between items-center px-5 shadow-md">
       <div className="flex gap-5 justify-center items-center">
         <div className="my-2">
-          <p className="rounded-md bg-slate-900 text-2xl text-slate-100 p-2 m-1">
-            Blog
-          </p>
+          <Link href={"/"}>
+            <p className="rounded-md bg-slate-900 text-2xl text-slate-100 p-2 m-1">
+              Blog
+            </p>
+          </Link>
         </div>
         <div className="xsm:hidden lg:flex">
           <input

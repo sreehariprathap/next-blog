@@ -1,11 +1,12 @@
 import { GoogleAuthProvider, signOut, signInWithPopup } from "firebase/auth"
-import React from "react"
+import React, { useContext } from "react"
 import toast from "react-hot-toast"
+import { UserContext } from "../lib/context"
 import { auth, provider } from "../lib/firebase"
 
 const Login = (props: any) => {
-  const user = null
-  const username = null
+  const { user, username } = useContext(UserContext)
+
   return (
     <>
       <main className="flex justify-center items-center mt-10">
@@ -34,7 +35,7 @@ const Login = (props: any) => {
 const SignInButton = () => {
   const signInWithGoogle = async () => {
     await signInWithPopup(auth, provider)
-      .then((result) => {
+      .then((result: any) => {
         console.log(result)
       })
       .catch((err) => {
@@ -57,8 +58,14 @@ const SignOutButton = () => {
     <button
       type="button"
       className="btn btn-error"
-      onClick={() => signOut(auth)}
-    ></button>
+      onClick={() =>
+        signOut(auth).then(() => {
+          console.log("success")
+        })
+      }
+    >
+      sign out
+    </button>
   )
 }
 // if user signed in but missing username ?
