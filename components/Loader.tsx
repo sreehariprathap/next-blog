@@ -1,6 +1,6 @@
 import React from "react"
 
-const Loader = ({ show }) => {
+const Loader: React.FC<{ show: boolean }> = ({ show }) => {
   return show ? <div className="loader"></div> : null
 }
 
