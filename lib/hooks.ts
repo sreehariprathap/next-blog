@@ -6,12 +6,16 @@ import { auth, db } from "./firebase"
 const useUserData = () => {
   const [user] = useAuthState(auth)
   const [username, setUsername] = useState(null)
+  const [userDp, setUserDp] = useState(
+    "https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745"
+  )
   useEffect(() => {
     let unsubscribe
     if (user) {
       const ref = doc(db, "users", user.uid)
       unsubscribe = onSnapshot(ref, (doc) => {
         setUsername(doc.data()?.username)
+        setUserDp(doc.data()?.photoURL)
       })
     } else {
       setUsername(null)
@@ -19,7 +23,7 @@ const useUserData = () => {
     return unsubscribe
   }, [user])
 
-  return { user, username }
+  return { user, username, userDp }
 }
 
 export default useUserData

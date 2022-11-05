@@ -1,8 +1,13 @@
-import React from 'react'
+import React from "react"
+import PostFeed from "../../components/PostFeed"
+import UserProfile from "../../components/UserProfile"
 
 const UserProfilePage = () => {
   return (
-    <div>UserProfilePage</div>
+    <div>
+      <UserProfile />
+      <PostFeed />
+    </div>
   )
 }
 

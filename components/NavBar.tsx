@@ -1,14 +1,14 @@
 import Link from "next/link"
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { BellIcon, PlusIcon } from "@heroicons/react/24/solid"
 import { signOut } from "firebase/auth"
-import { auth } from "../lib/firebase"
+import { auth, db } from "../lib/firebase"
 import { UserContext } from "../lib/context"
+import { doc, onSnapshot } from "firebase/firestore"
 
 const NavBar = () => {
-  const { user, username } = useContext(UserContext)
-  console.log(user)
-  console.log(username)
+  const { user, username, userDp } = useContext(UserContext)
+
   return (
     <nav className="flex justify-between items-center px-5 shadow-md">
       <div className="flex gap-5 justify-center items-center">
@@ -47,7 +47,7 @@ const NavBar = () => {
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
-                  <img src="https://placeimg.com/80/80/people" />
+                  <img src={userDp} />
                 </div>
               </label>
               <ul
