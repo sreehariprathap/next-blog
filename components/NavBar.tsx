@@ -1,10 +1,9 @@
 import Link from "next/link"
-import React, { useContext, useState } from "react"
+import React, { useContext } from "react"
 import { BellIcon, PlusIcon } from "@heroicons/react/24/solid"
 import { signOut } from "firebase/auth"
-import { auth, db } from "../lib/firebase"
+import { auth} from "../lib/firebase"
 import { UserContext } from "../lib/context"
-import { doc, onSnapshot } from "firebase/firestore"
 
 const NavBar = () => {
   const { user, username, userDp } = useContext(UserContext)
