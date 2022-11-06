@@ -7,26 +7,26 @@ const useUserData = () => {
   const [user] = useAuthState(auth)
   const [username, setUsername] = useState(null)
   const [useremail, setUseremail] = useState(null)
-  const [userId, setUserId] = useState(null)
+  const [userId, setUserId] = useState('')
   const [userDp, setUserDp] = useState(
     "https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745"
   )
   useEffect(() => {
     let unsubscribe
     if (user) {
-      console.log(user)
       const ref = doc(db, "users", user.uid)
       unsubscribe = onSnapshot(ref, (doc) => {
         setUsername(doc.data()?.username)
         setUserDp(doc.data()?.photoURL)
         setUseremail(doc.data()?.email)
-        setUserId(doc.data()?.uid)
+        setUserId( user.uid)
       })
     } else {
       setUsername(null)
     }
     return unsubscribe
   }, [user])
+  
 
   return { user, username, userDp, useremail, userId }
 }

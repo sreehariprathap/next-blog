@@ -7,7 +7,8 @@ const postApi = async (req: NextApiRequest, res: NextApiResponse) => {
       title: req.body.title,
       content: req.body.content,
       published: req.body.published,
-      authorId: req.body.author,
+      authorId: req.body.authorId,
+      imageUrl: req.body.profileUrl
     },
   })
   res.send(post)

@@ -9,6 +9,7 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model Post {
   id        String     @default(cuid()) @id
   title     String
@@ -16,6 +17,7 @@ model Post {
   published Boolean @default(false)
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  String?
+  imageUrl String?
 }
 
 model User {
@@ -24,6 +26,8 @@ model User {
   email         String?   @unique
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  imageUrl String?
+
   posts         Post[]
   @@map(name: "users")
 }
