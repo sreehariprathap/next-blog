@@ -98,7 +98,6 @@ const UsernameForm = () => {
       if (username.length > 3) {
         const ref = doc(db, `usernames`, username)
         const docSnap = await getDoc(ref)
-        console.log("firestore read executed")
         setIsValid(!docSnap.exists())
         setLoading(false)
       }

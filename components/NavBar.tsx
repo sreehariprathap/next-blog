@@ -2,7 +2,7 @@ import Link from "next/link"
 import React, { useContext } from "react"
 import { BellIcon, PlusIcon } from "@heroicons/react/24/solid"
 import { signOut } from "firebase/auth"
-import { auth} from "../lib/firebase"
+import { auth } from "../lib/firebase"
 import { UserContext } from "../lib/context"
 
 const NavBar = () => {
@@ -31,9 +31,11 @@ const NavBar = () => {
         {user && (
           <>
             <div>
-              <button className="xsm:hidden lg:btn bg-transparent border-none text-black hover:text-purple-700 hover:bg-purple-100">
-                Create Post
-              </button>
+              <Link href={"/posts/create"}>
+                <button className="xsm:hidden lg:btn bg-transparent border-none text-black hover:text-purple-700 hover:bg-purple-100">
+                  Create Post
+                </button>
+              </Link>
               <button className="btn bg-transparent border-none rounded-full text-black hover:text-purple-700 hover:bg-purple-100 lg:hidden">
                 <PlusIcon className="h-6 w-6 text-black hover:text-purple-700 hover:bg-purple-100" />
               </button>
