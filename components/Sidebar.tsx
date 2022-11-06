@@ -1,7 +1,71 @@
+import Link from "next/link"
 import React from "react"
+import styles from "../styles/sidebar.module.scss"
 
 const Sidebar = () => {
-  return <div className="sticky left-0 w-3/12  h-screen"></div>
+  return (
+    <div className="sticky left-0 w-3/12  h-screen">
+      <ul className="flex flex-col items-start pl-10 justify-center pt-10 gap-1">
+        <li className={styles.option}>
+          <Link href={"/"}>
+            <div>
+              <span>🏠 Home</span>
+            </div>
+          </Link>
+        </li>
+        <li className={styles.option}>
+          <Link href={"/"}>
+            <div>
+              <span>📚 Reading List</span>
+            </div>
+          </Link>
+        </li>
+        <li className={styles.option}>
+          <Link href={"/"}>
+            <div>
+              <span>📃 Listings</span>
+            </div>
+          </Link>
+        </li>
+        <li className={styles.option}>
+          <Link href={"/"}>
+            <div>
+              <span>🏷️ Tags</span>
+            </div>
+          </Link>
+        </li>
+        <li className={styles.option}>
+          <Link href={"/"}>
+            <div>
+              <span>💡 FAQ</span>
+            </div>
+          </Link>
+        </li>
+
+        <li className={styles.option}>
+          <Link href={"/"}>
+            <div>
+              <span>🌈 About</span>
+            </div>
+          </Link>
+        </li>
+        <li className={styles.option}>
+          <Link href={"/"}>
+            <div>
+              <span>📞 Contact</span>
+            </div>
+          </Link>
+        </li>
+        <li className={styles.option}>
+          <Link href={"/"}>
+            <div>
+              <span>🦮 Guides</span>
+            </div>
+          </Link>
+        </li>
+      </ul>
+    </div>
+  )
 }
 
 export default Sidebar
