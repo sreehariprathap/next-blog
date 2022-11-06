@@ -15,16 +15,18 @@ import "@fontsource/roboto/700.css"
 export default function App({ Component, pageProps }: AppProps) {
   const userData = useUserData()
   return (
-    <UserContext.Provider value={userData}>
-      <NavBar />
-      <div className="flex">
-        <Sidebar />
-        <div className="w-full">
-          <Component {...pageProps} />
+    <div className="bg-slate-100">
+      <UserContext.Provider value={userData}>
+        <NavBar />
+        <div className="flex">
+          <Sidebar />
+          <div className="w-full">
+            <Component {...pageProps} />
+          </div>
+          <SuggestionsBar />
         </div>
-        <SuggestionsBar />
-      </div>
-      <Toaster />
-    </UserContext.Provider>
+        <Toaster />
+      </UserContext.Provider>
+    </div>
   )
 }

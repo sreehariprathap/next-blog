@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { UserContext } from "../../lib/context"
 import axios from "axios"
 import { toast } from "react-hot-toast"
+import styles from "./createpost.module.scss"
 
 const create = () => {
   const { user, username, userDp, userId } = useContext(UserContext)
@@ -28,8 +29,8 @@ const create = () => {
   }
   return (
     <>
-      <div className="card m-5 ">
-        <h2 className="text-3xl mb-5"> Create a post</h2>
+      <div className="card  m-5 ">
+        <h2 className="text-3xl mb-5 text-center"> Create a post</h2>
         {Image.length > 3 ? (
           <img src={Image} className="w-full h-44 object-cover rounded-md" />
         ) : null}
@@ -38,14 +39,14 @@ const create = () => {
             <input
               type="text"
               placeholder="Enter title"
-              className="input w-full "
+              className={`${styles.title} input w-full`}
               {...register("title")}
             />
           </div>
 
           <div>
             <textarea
-              className="textarea w-full"
+              className={`${styles.content} textarea w-full`}
               placeholder="Type Content here"
               {...register("content")}
             ></textarea>
@@ -62,7 +63,7 @@ const create = () => {
               <input
                 type="text"
                 placeholder="Enter image url"
-                className="input w-full"
+                className={`${styles.content} input w-full`}
                 {...register("imageUrl")}
                 onChange={handleOnchange}
                 value={formValue}
@@ -76,12 +77,11 @@ const create = () => {
                 data.published = false
                 data.authorId = userId
                 axios
-                .post("http://localhost:3000/api/posts/create", data)
-                .then((response) => {
-                  console.log(response.data)
-                  toast.success("saved as draft")
-                  router.push("/")
-                })
+                  .post("http://localhost:3000/api/posts/create", data)
+                  .then((response) => {
+                    toast.success("saved as draft")
+                    router.push("/")
+                  })
               })}
             >
               Save draft
@@ -94,7 +94,6 @@ const create = () => {
                 axios
                   .post("http://localhost:3000/api/posts/create", data)
                   .then((response) => {
-                    console.log(response.data)
                     toast.success("posted successfully")
                     router.push("/")
                   })

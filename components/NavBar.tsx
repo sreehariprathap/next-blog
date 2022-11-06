@@ -9,7 +9,7 @@ const NavBar = () => {
   const { user, username, userDp } = useContext(UserContext)
 
   return (
-    <nav className="flex justify-between items-center px-5 shadow-md">
+    <nav className="flex justify-between items-center px-5 shadow-md bg-white">
       <div className="flex gap-5 justify-center items-center">
         <div className="my-2">
           <Link href={"/"}>
@@ -32,7 +32,7 @@ const NavBar = () => {
           <>
             <div>
               <Link href={"/posts/create"}>
-                <button className="xsm:hidden lg:btn bg-transparent border-none text-black hover:text-purple-700 hover:bg-purple-100">
+                <button className="xsm:hidden lg:btn btn-secondary  border-none text-black ">
                   Create Post
                 </button>
               </Link>

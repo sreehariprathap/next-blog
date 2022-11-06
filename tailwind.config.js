@@ -6,7 +6,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   daisyui: {
-    themes: ["light"],
+    themes: ["winter"],
   },
   theme: {
     screens: {
