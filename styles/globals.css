@@ -25,3 +25,6 @@
 .card {
   @apply bg-white;
 }
+body {
+  @apply bg-slate-50 min-h-screen;
+}

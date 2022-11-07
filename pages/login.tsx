@@ -32,6 +32,7 @@ const SignInButton = () => {
       .then((result: any) => {
         console.log(result)
         var userData = result.user
+        console.log(userData)
         axios
           .post("http://localhost:3000/api/users/create", {
             id: userData.uid,
@@ -43,6 +44,7 @@ const SignInButton = () => {
             if (response === "user created") {
               toast.success("account created")
             }
+            localStorage.setItem("uid", userData.uid)
             router.push("/")
           })
       })
@@ -71,7 +73,11 @@ const SignOutButton = () => {
     <button
       type="button"
       className="btn btn-error bg-red-600 text-white"
-      onClick={() => signOut(auth)}
+      onClick={() =>
+        signOut(auth).then(() => {
+          localStorage.clear()
+        })
+      }
     >
       sign out
     </button>

@@ -15,7 +15,7 @@ import "@fontsource/roboto/700.css"
 export default function App({ Component, pageProps }: AppProps) {
   const userData = useUserData()
   return (
-    <div className="bg-slate-100">
+    <div >
       <UserContext.Provider value={userData}>
         <NavBar />
             <Component {...pageProps} />
