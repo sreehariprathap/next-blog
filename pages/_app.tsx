@@ -18,13 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <div className="bg-slate-100">
       <UserContext.Provider value={userData}>
         <NavBar />
-        <div className="flex">
-          <Sidebar />
-          <div className="w-full">
             <Component {...pageProps} />
-          </div>
-          <SuggestionsBar />
-        </div>
         <Toaster />
       </UserContext.Provider>
     </div>

@@ -5,7 +5,7 @@ import styles from "../styles/sidebar.module.scss"
 const Sidebar = () => {
   return (
     <div className="sticky left-0 w-3/12  h-screen">
-      <ul className="flex flex-col items-start pl-10 justify-center pt-10 gap-1">
+      <ul className="flex flex-col items-start pl-5 justify-center pt-10 gap-1">
         <li className={styles.option}>
           <Link href={"/"}>
             <div>
