@@ -18,6 +18,10 @@ model Post {
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  String?
   imageUrl String?
+  heartCount Int?
+  comments Comment[]
+  @@map(name: "posts")
+
 }
 
 model User {
@@ -29,6 +33,21 @@ model User {
   imageUrl String?
   backGroundImageUrl String?
 
+  githubUrl String?
+  linkedinUrl String?
+  websiteUrl String?
+
   posts         Post[]
+  comments Comment[]
   @@map(name: "users")
+}
+
+model Comment {
+   id            String       @default(cuid()) @id
+   authorId  String?
+   postId  String?
+   author    User?   @relation(fields: [authorId], references: [id])
+   post Post? @relation(fields: [id], references: [id])
+  @@map(name: "comments")
+
 }

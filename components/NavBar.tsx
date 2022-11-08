@@ -4,6 +4,7 @@ import { BellIcon, PlusIcon } from "@heroicons/react/24/solid"
 import { signOut } from "firebase/auth"
 import { auth } from "../lib/firebase"
 import { UserContext } from "../lib/context"
+import router, { Router } from "next/router"
 
 const NavBar = () => {
   const { user, username, userDp } = useContext(UserContext)
@@ -56,9 +57,9 @@ const NavBar = () => {
                 className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <a className="justify-between h-16">
+                  <Link href={"/profile"} className="justify-between h-16">
                     {username ? username : "no name"}
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a>Settings</a>
@@ -91,7 +92,18 @@ const NavBar = () => {
 }
 //sign out button
 const SignOutButton = () => {
-  return <a onClick={() => signOut(auth)}>sign out</a>
+  return (
+    <a
+      onClick={() =>
+        signOut(auth).then(() => {
+          router.push("/")
+          localStorage.clear()
+        })
+      }
+    >
+      sign out
+    </a>
+  )
 }
 
 export default NavBar

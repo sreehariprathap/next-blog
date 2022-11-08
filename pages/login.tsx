@@ -44,6 +44,7 @@ const SignInButton = () => {
             if (response === "user created") {
               toast.success("account created")
             }
+            toast.success("login successfull")
             localStorage.setItem("uid", userData.uid)
             router.push("/")
           })
@@ -76,6 +77,7 @@ const SignOutButton = () => {
       onClick={() =>
         signOut(auth).then(() => {
           localStorage.clear()
+          router.push("/")
         })
       }
     >
