@@ -91,6 +91,7 @@ const create = () => {
               onClick={handleSubmit((data) => {
                 data.published = true
                 data.authorId = userId
+                data.imageUrl = formValue
                 axios
                   .post("http://localhost:3000/api/posts/create", data)
                   .then((response) => {

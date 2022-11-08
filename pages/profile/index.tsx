@@ -69,6 +69,10 @@ const profile = () => {
         setSocials(true)
       }
     })
+  }, [])
+
+  useEffect(() => {
+    const id = localStorage.getItem("uid")
     axios.get(`http://localhost:3000/api/posts/${id}`).then((res: any) => {
       setPosts(res.data)
       console.log(res.data)
@@ -178,18 +182,27 @@ const profile = () => {
       </div>
       <div className="bg-white my-2 rounded-xl mx-5 p-3">
         <h2 className="text-center my-2 text-2xl font-medium">Posts</h2>
-        {posts
-          ? posts.map((post) => {
+        <div className="flex flex-col gap-4">
+          {posts ? (
+            posts.map((post: any) => {
               return (
                 <PostFeed
                   postImage={post.imageUrl}
                   title={post.title}
                   content={post.content}
                   author={post.author}
+                  heartCount={post.heartCount}
+                  comments={post.comments}
+                  id={post.id}
                 />
               )
             })
-          : null}
+          ) : (
+            <h2 className="text-center my-2 text-lg font-medium">
+              No posts to display
+            </h2>
+          )}
+        </div>
       </div>
     </>
   )

@@ -11,7 +11,7 @@ export default function Home() {
       <div className="flex gap-4">
         <Sidebar />
         <div className="w-full">
-          <PostFeedLayout />
+          {/* <PostFeedLayout /> */}
         </div>
         <SuggestionsBar />
       </div>

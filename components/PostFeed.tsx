@@ -6,9 +6,23 @@ import {
   BookmarkIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid"
+import DeleteModal from "./DeleteModal"
 
 const PostFeed = (props: any) => {
-  // const postImage = true
+  const readingTime = (content: string) => {
+    const wpm = 225
+    const words = content.trim().split(/\s+/).length
+    const time = Math.ceil(words / wpm)
+    return time
+  }
+
+  const truncateWithEllipsis = (content: string, maxLength: number) => {
+    if (content.length > maxLength) {
+      return content.substring(0, maxLength) + "..."
+    }
+    return content
+  }
+
   return (
     <>
       <div className="card shadow rounded-sm ">
@@ -35,7 +49,7 @@ const PostFeed = (props: any) => {
               <div className="flex">
                 {!props.author ? (
                   <div>
-                    <TrashIcon className="text-red-400 h-6 w-6" />
+                    <DeleteModal id={props.id} />
                   </div>
                 ) : null}
               </div>
@@ -45,21 +59,23 @@ const PostFeed = (props: any) => {
               <Tags />
             </div>
             <div className="mt-2">
-              <h2 className="text-md ">{props.content}</h2>
+              <h2 className="text-md ">
+                {truncateWithEllipsis(props.content, 400)}
+              </h2>
             </div>
             <footer className="mt-5 flex justify-between">
               <div className="flex gap-5 ">
                 <div className="flex gap-3  hover:bg-slate-100 rounded-xl p-2 duration-200 ease">
                   <HeartIcon className="h-6 w-6 text-slate-300 hover:text-pink-600 duration-200 ease" />
-                  reactions
+                  {props.heartCount} reactions
                 </div>
                 <div className="flex gap-3  hover:bg-slate-100 rounded-xl p-2 duration-200 ease">
                   <ChatBubbleLeftIcon className="h-6 w-6 text-slate-300 hover:text-green-600 duration-200 ease" />
-                  comments
+                  {props.heartCount} comments
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <p>3 mins read</p>
+                <p>{readingTime(props.content)} mins read</p>
                 <div className="flex gap-3   rounded-xl p-2 duration-200 ease">
                   <BookmarkIcon className="h-6 w-6 text-slate-300 hover:text-blue-600 duration-200 ease" />
                 </div>
