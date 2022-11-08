@@ -27,6 +27,7 @@ model User {
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   imageUrl String?
+  backGroundImageUrl String?
 
   posts         Post[]
   @@map(name: "users")
