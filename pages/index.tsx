@@ -17,7 +17,7 @@ export default function Home() {
         console.log(res.data)
         setPosts(res.data)
       })
-  }, [])
+  }, [posts])
 
   return (
     <div className={`${styles.container} h-full`}>
