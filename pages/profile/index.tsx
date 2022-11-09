@@ -74,6 +74,9 @@ const profile = () => {
   useEffect(() => {
     const id = localStorage.getItem("uid")
     axios.get(`http://localhost:3000/api/posts/${id}`).then((res: any) => {
+      // res.data.forEach((post: any) => {
+      //   post.createdAt = new Date(post.createdAt)
+      // })
       setPosts(res.data)
       console.log(res.data)
     })
@@ -180,7 +183,7 @@ const profile = () => {
           <AddSocialForm git={git} web={web} linkedin={linkedin} />
         )}
       </div>
-      <div className="bg-white my-2 rounded-xl mx-5 p-3">
+      <div className=" my-2 rounded-xl mx-5">
         <h2 className="text-center my-2 text-2xl font-medium">Posts</h2>
         <div className="flex flex-col gap-4">
           {posts ? (
@@ -194,6 +197,7 @@ const profile = () => {
                   heartCount={post.heartCount}
                   comments={post.comments}
                   id={post.id}
+                  date={post.createdAt}
                 />
               )
             })

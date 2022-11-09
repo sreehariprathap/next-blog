@@ -9,5 +9,20 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       },
     },
   })
-  res.send(feed)
+  const userData = await prisma.user.findMany({
+    select: {
+      id: true,
+      imageUrl: true,
+      name:true
+    },
+  })
+  userData.forEach((user: any) => {
+    feed.forEach((item: any) => {
+      if (user.id === item.authorId) {
+        item.authorImageUrl = user.imageUrl
+        item.authorName = user.name
+      }
+    })
+  })
+  res.send( feed )
 }
