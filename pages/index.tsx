@@ -33,7 +33,6 @@ export default function Home() {
                   postImage={post.imageUrl}
                   title={post.title}
                   content={post.content}
-                  author={post.author}
                   heartCount={post.heartCount}
                   comments={post.comments}
                   id={post.id}
