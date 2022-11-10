@@ -1,13 +1,77 @@
 import Link from "next/link"
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { BellIcon, PlusIcon } from "@heroicons/react/24/solid"
 import { signOut } from "firebase/auth"
 import { auth } from "../lib/firebase"
 import { UserContext } from "../lib/context"
 import router from "next/router"
+import { ReactSearchAutocomplete } from "react-search-autocomplete"
+import axios from "axios"
 
 const NavBar = () => {
   const { user, username, userDp } = useContext(UserContext)
+  const item = [
+    {
+      id: 0,
+      name: "Cobol",
+    },
+    {
+      id: 1,
+      name: "JavaScript",
+    },
+    {
+      id: 2,
+      name: "Basic",
+    },
+    {
+      id: 3,
+      name: "PHP",
+    },
+    {
+      id: 4,
+      name: "Java",
+    },
+  ]
+  const [items, setItems] = useState(item)
+  // note: the id field is mandatory
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/posts").then((res: any) => {
+      setItems(res.data)
+    })
+  }, [])
+
+  const handleOnSearch = (string: any, results: any) => {
+    // onSearch will have as the first callback parameter
+    // the string searched and for the second the results.
+    console.log(string, results)
+  }
+
+  const handleOnHover = (result: any) => {
+    // the item hovered
+    console.log(result)
+  }
+
+  const handleOnSelect = (item: any) => {
+    // the item selected
+    console.log(item)
+  }
+
+  const handleOnFocus = () => {
+    console.log("Focused")
+  }
+
+  const formatResult = (item: any) => {
+    return (
+      <>
+        <span style={{ display: "block", textAlign: "left" }}>
+          id: {item.id}
+        </span>
+        <span style={{ display: "block", textAlign: "left" }}>
+          name: {item.name}
+        </span>
+      </>
+    )
+  }
 
   return (
     <nav className="flex justify-between items-center px-5 shadow-md bg-white">
@@ -20,11 +84,22 @@ const NavBar = () => {
           </Link>
         </div>
         <div className="xsm:hidden lg:flex">
-          <input
+          {/* <input
             type="text"
             placeholder="Search"
             className="input w-full max-w-xs"
-          />
+          /> */}
+          <div style={{ width: 400 }}>
+            <ReactSearchAutocomplete
+              items={items}
+              onSearch={handleOnSearch}
+              onHover={handleOnHover}
+              onSelect={handleOnSelect}
+              onFocus={handleOnFocus}
+              autoFocus
+              formatResult={formatResult}
+            />
+          </div>
         </div>
       </div>
       <div className="flex gap-5">

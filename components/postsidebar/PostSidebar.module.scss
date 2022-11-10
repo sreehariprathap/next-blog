@@ -1,0 +1,12 @@
+@tailwind components;
+@tailwind utilities;
+
+.iconHeart {
+  @apply w-8 h-8 text-slate-300 hover:animate-pulse  hover:text-pink-600 ease-in duration-100; 
+}
+.iconComment {
+  @apply w-8 h-8 text-slate-300 hover:animate-pulse hover:text-green-600 ease-in duration-100;
+}
+.iconBookmark {
+  @apply w-8 h-8 text-slate-300 hover:animate-pulse hover:text-blue-600 ease-in duration-100;
+}

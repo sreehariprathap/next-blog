@@ -4,7 +4,6 @@ import {
   HeartIcon,
   ChatBubbleLeftIcon,
   BookmarkIcon,
-  TrashIcon,
 } from "@heroicons/react/24/solid"
 import DeleteModal from "./DeleteModal"
 
@@ -14,6 +13,16 @@ const PostFeed = (props: any) => {
     const words = content.trim().split(/\s+/).length
     const time = Math.ceil(words / wpm)
     return time
+  }
+
+  // function to get proper date format
+  const getdate = (dateValue: string) => {
+    const date = new Date(dateValue)
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const returndate = [year, month, day].join("-")
+    return returndate
   }
 
   const truncateWithEllipsis = (content: string, maxLength: number) => {
@@ -34,7 +43,7 @@ const PostFeed = (props: any) => {
         <div>
           <div className="flex justify-between mt-3">
             <div className="flex flex-col">
-              <h2 className="text-md ">{props.date}</h2>
+              <h2 className="text-md ">{getdate(props.date)}</h2>
             </div>
             <div className="flex">
               {!props.author ? (

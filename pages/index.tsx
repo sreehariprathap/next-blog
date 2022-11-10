@@ -9,15 +9,18 @@ import styles from "../styles/Home.module.css"
 export default function Home() {
   const [posts, setPosts] = useState([])
 
-  useEffect(() => {
-    const id = localStorage.getItem("uid")
+  const getPosts = (id: string) => {
     axios
       .post("http://localhost:3000/api/posts/feed", { userId: id })
       .then((res: any) => {
-        console.log(res.data)
+        console.log("called useeffect")
         setPosts(res.data)
       })
-  }, [posts])
+  }
+  useEffect(() => {
+    const id = localStorage.getItem("uid")
+    getPosts(id)
+  }, [])
 
   return (
     <div className={`${styles.container} h-full`}>

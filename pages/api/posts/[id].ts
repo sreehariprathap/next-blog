@@ -3,11 +3,20 @@ import { NextApiRequest, NextApiResponse } from "next"
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query
-  const feed = await prisma.post.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-    where: { authorId: String(id) },
+  const feed: any = await prisma.post.findUnique({
+    where: { id: String(id) },
   })
-  res.send(feed)
+  const uid = feed?.authorId
+  let user: any = await prisma.user.findFirst({
+    where: {
+      id: {
+        equals: uid,
+      },
+    },
+    select: {
+      imageUrl: true,
+      name: true,
+    },
+  })
+  res.send({ feed, user })
 }

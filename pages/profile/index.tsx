@@ -6,6 +6,7 @@ import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import PostFeed from "../../components/PostFeed"
+import Loader from "../../components/Loader"
 
 const profile = () => {
   const { username } = useContext(UserContext)
@@ -34,13 +35,13 @@ const profile = () => {
     backgroundImage: `url("${backGround.toString()}")`,
   }
 
-  const onSubmit = () => {
+  const changeImage = () => {
     const id = localStorage.getItem("uid")
     setBackGround(formValue)
     axios
       .patch("http://localhost:3000/api/users/change-cover", {
         id: id,
-        backGroundImageUrl: backGround.toString(),
+        backGroundImageUrl: backGround,
       })
       .then(() => {
         setCoverImageChange(false)
@@ -50,7 +51,6 @@ const profile = () => {
   useEffect(() => {
     const id = localStorage.getItem("uid")
     axios.get(`http://localhost:3000/api/users/${id}`).then((res: any) => {
-      console.log(res.data)
       setName(res.data.name)
       setPicture(res.data.imageUrl)
       if (res.data.backGroundImageUrl) {
@@ -88,6 +88,7 @@ const profile = () => {
         className={` flex flex-col items-center justify-center m-5 rounded-md p-5 shadow-xl`}
         style={sectionStyle}
       >
+        {/* user profile  */}
         <div className="flex flex-col items-center">
           <img
             src={picture}
@@ -101,6 +102,7 @@ const profile = () => {
             </h2>
           </div>
         </div>
+        {/* cover image  */}
         <div className="flex w-full justify-end m-2 p-2">
           {coverImageChange ? (
             <div className="flex gap-3 items-center">
@@ -108,7 +110,7 @@ const profile = () => {
                 <div className="flex gap-3 items-center">
                   <input
                     type="text"
-                    placeholder="Enter your username"
+                    placeholder="Enter your image url"
                     className={`input  w-full max-w-xs`}
                     onChange={handleOnchange}
                     value={formValue}
@@ -116,7 +118,10 @@ const profile = () => {
                 </div>
               </form>
               <div className="flex gap-3">
-                <button className="btn btn-sm btn-success" onClick={onSubmit}>
+                <button
+                  className="btn btn-sm btn-success"
+                  onClick={changeImage}
+                >
                   save
                 </button>
                 <button
@@ -141,7 +146,7 @@ const profile = () => {
           )}
         </div>
       </div>
-
+      {/* social links  */}
       <div className="bg-white my-2 rounded-xl mx-5 p-3">
         <h2 className="text-center my-2 text-2xl font-medium">socials</h2>
         {socials ? (
@@ -183,6 +188,7 @@ const profile = () => {
           <AddSocialForm git={git} web={web} linkedin={linkedin} />
         )}
       </div>
+      {/* post feeds  */}
       <div className=" my-2 rounded-xl mx-5">
         <h2 className="text-center my-2 text-2xl font-medium">Posts</h2>
         <div className="flex flex-col gap-4">
@@ -224,6 +230,7 @@ const AddSocialForm = (props: any) => {
       .patch("http://localhost:3000/api/users/add-social", data)
       .then((res) => {
         toast.success("links added successfully")
+        setSocialForm(false)
       })
   }
   if (socialForm) {
@@ -238,19 +245,16 @@ const AddSocialForm = (props: any) => {
               {...register("git")}
               placeholder="github url"
               className={`input shadow-lg w-full max-w-xs`}
-              value={props.git}
             />
             <input
               {...register("linkedin")}
               placeholder="linkedin url"
               className={`input shadow-lg w-full max-w-xs`}
-              value={props.linkedin}
             />
             <input
               {...register("web")}
               placeholder="website url"
               className={`input shadow-lg w-full max-w-xs`}
-              value={props.web}
             />
           </div>
           <div className="flex justify-center gap-3">

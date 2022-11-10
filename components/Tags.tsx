@@ -17,7 +17,14 @@ const Tags = (props: any) => {
       <div className="flex gap-3">
         {tags.length
           ? tags.map((tag) => {
-              return <div className="bg-blue-500 text-white font-medium rounded-full  px-2 py-1">#{tag}</div>
+              return (
+                <div
+                  className="bg-blue-500 text-white font-medium rounded-full  px-2 py-1"
+                  key={tag}
+                >
+                  #{tag}
+                </div>
+              )
             })
           : null}
       </div>

@@ -23,6 +23,15 @@ const Feed = (props: any) => {
     }
     return content
   }
+  // function to get proper date format
+  const getDate = (dateValue: string) => {
+    const date = new Date(dateValue)
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const returndate = [year, month, day].join("-")
+    return returndate
+  }
 
   const like = (id: string) => {
     axios
@@ -45,7 +54,7 @@ const Feed = (props: any) => {
             <img src={props.authorImage} className="w-14 rounded-full h-14" />
             <div className="">
               <h2 className="text-lg font-medium">{props.author}</h2>
-              <h2>{props.date}</h2>
+              <h2>{getDate(props.date)}</h2>
             </div>
           </div>
         </div>
