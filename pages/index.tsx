@@ -1,4 +1,5 @@
 import axios from "axios"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import Feed from "../components/Feed"
 import Loader from "../components/Loader"
@@ -32,18 +33,22 @@ export default function Home() {
           {posts ? (
             posts.map((post: any) => {
               return (
-                <Feed
-                  postImage={post.imageUrl}
-                  title={post.title}
-                  content={post.content}
-                  heartCount={post.heartCount}
-                  comments={post.comments}
-                  id={post.id}
-                  date={post.createdAt}
-                  authorImage={post.authorImageUrl}
-                  tags={post.tags}
-                  author={post.authorName}
-                />
+                <>
+                  <Link href={`posts/${post.id}`}>
+                    <Feed
+                      postImage={post.imageUrl}
+                      title={post.title}
+                      content={post.content}
+                      heartCount={post.heartCount}
+                      comments={post.comments}
+                      id={post.id}
+                      date={post.createdAt}
+                      authorImage={post.authorImageUrl}
+                      tags={post.tags}
+                      author={post.authorName}
+                    />
+                  </Link>
+                </>
               )
             })
           ) : (

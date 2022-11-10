@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import PostFeed from "../../components/PostFeed"
 import Loader from "../../components/Loader"
+import router, { Router } from "next/router"
 
 const profile = () => {
   const { username } = useContext(UserContext)
@@ -73,13 +74,15 @@ const profile = () => {
 
   useEffect(() => {
     const id = localStorage.getItem("uid")
-    axios.get(`http://localhost:3000/api/posts/${id}`).then((res: any) => {
-      // res.data.forEach((post: any) => {
-      //   post.createdAt = new Date(post.createdAt)
-      // })
-      setPosts(res.data)
-      console.log(res.data)
-    })
+    axios
+      .get(`http://localhost:3000/api/users/posts/${id}`)
+      .then((res: any) => {
+        // res.data.forEach((post: any) => {
+        //   post.createdAt = new Date(post.createdAt)
+        // })
+        setPosts(res.data)
+        console.log(res.data)
+      })
   }, [])
 
   return (
@@ -195,17 +198,21 @@ const profile = () => {
           {posts ? (
             posts.map((post: any) => {
               return (
-                <PostFeed
-                  postImage={post.imageUrl}
-                  title={post.title}
-                  content={post.content}
-                  author={post.author}
-                  heartCount={post.heartCount}
-                  comments={post.comments}
-                  id={post.id}
-                  tags={post.tags}
-                  date={post.createdAt}
-                />
+                <>
+                  <Link href={`posts/${post.id}`}>
+                    <PostFeed
+                      postImage={post.imageUrl}
+                      title={post.title}
+                      content={post.content}
+                      author={post.author}
+                      heartCount={post.heartCount}
+                      comments={post.comments}
+                      id={post.id}
+                      tags={post.tags}
+                      date={post.createdAt}
+                    />
+                  </Link>
+                </>
               )
             })
           ) : (
