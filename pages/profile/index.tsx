@@ -197,6 +197,7 @@ const profile = () => {
                   heartCount={post.heartCount}
                   comments={post.comments}
                   id={post.id}
+                  tags={post.tags}
                   date={post.createdAt}
                 />
               )

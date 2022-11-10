@@ -38,6 +38,7 @@ export default function Home() {
                   id={post.id}
                   date={post.createdAt}
                   authorImage={post.authorImageUrl}
+                  tags={post.tags}
                   author={post.authorName}
                 />
               )

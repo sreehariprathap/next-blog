@@ -4,7 +4,7 @@ import { BellIcon, PlusIcon } from "@heroicons/react/24/solid"
 import { signOut } from "firebase/auth"
 import { auth } from "../lib/firebase"
 import { UserContext } from "../lib/context"
-import router, { Router } from "next/router"
+import router from "next/router"
 
 const NavBar = () => {
   const { user, username, userDp } = useContext(UserContext)

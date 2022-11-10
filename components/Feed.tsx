@@ -7,6 +7,7 @@ import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { toast } from "react-hot-toast"
 import style from "../styles/feed.module.scss"
+import Tags from "./Tags"
 
 const Feed = (props: any) => {
   const readingTime = (content: string) => {
@@ -51,7 +52,8 @@ const Feed = (props: any) => {
         <section className={style.content}>
           <div className="my-4">
             <h2 className="text-4xl font-bold mb-5">{props.title}</h2>
-            <p>{truncateWithEllipsis(props.content, 400)}</p>
+            <Tags tags={props.tags} />
+            <p className="mt-2">{truncateWithEllipsis(props.content, 400)}</p>
           </div>
         </section>
       </div>

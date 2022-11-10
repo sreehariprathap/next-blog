@@ -1,21 +1,28 @@
 import { useRouter } from "next/router"
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { UserContext } from "../../lib/context"
 import axios from "axios"
 import { toast } from "react-hot-toast"
 import styles from "./createpost.module.scss"
+import makeAnimated from "react-select/animated"
+import CreatableSelect from "react-select/creatable"
+import LoaderAnimation from "../../components/LoaderAnimation"
 
 const create = () => {
-  const { user, username, userDp, userId } = useContext(UserContext)
+  const { userId } = useContext(UserContext)
   const { register, handleSubmit } = useForm()
-  const [data, setData] = useState("")
   const [coverImage, setCoverImage] = useState(false)
   const [Image, setImage] = useState("")
   const [formValue, setFormValue] = useState("")
+  const [tagOptions, setTagOptions] = useState([])
+  const [selectedTags, setSelectedTags] = useState([])
   const router = useRouter()
 
+  const animatedComponents = makeAnimated()
+
+  // setting live image preview
   const handleOnchange = (e: any) => {
     const val = e.target.value.toLowerCase()
     if (val.length > 3) {
@@ -24,9 +31,26 @@ const create = () => {
     }
   }
 
+  // for getting the selected tags from select
+  const handleChange = (e: any | never) => {
+    setSelectedTags(Array.isArray(e) ? e.map((x) => x.value) : [])
+  }
+
+  // for getting the tags from db
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/tags").then((result) => {
+      result.data.forEach((item: any) => {
+        ;(item.value = item.id), (item.label = item.name)
+      })
+      setTagOptions(result.data)
+    })
+  }, [])
+
+  //to toggle add image functionality
   const toggleCoverImageVisibility = () => {
     setCoverImage(!coverImage)
   }
+
   return (
     <>
       <div className="card  m-5 ">
@@ -50,6 +74,17 @@ const create = () => {
               placeholder="Type Content here"
               {...register("content")}
             ></textarea>
+          </div>
+
+          <div>
+            <CreatableSelect
+              isClearable
+              options={tagOptions}
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              isMulti
+              onChange={handleChange}
+            />
           </div>
           {!coverImage ? (
             <button
@@ -76,6 +111,7 @@ const create = () => {
               onClick={handleSubmit((data) => {
                 data.published = false
                 data.authorId = userId
+                data.tags = selectedTags
                 axios
                   .post("http://localhost:3000/api/posts/create", data)
                   .then((response) => {
@@ -92,6 +128,7 @@ const create = () => {
                 data.published = true
                 data.authorId = userId
                 data.imageUrl = formValue
+                data.tags = selectedTags
                 axios
                   .post("http://localhost:3000/api/posts/create", data)
                   .then((response) => {

@@ -46,7 +46,9 @@ const PostFeed = (props: any) => {
           </div>
           <div className="my-4">
             <h2 className="text-4xl font-bold mb-5">{props.title}</h2>
-            <Tags />
+            <div>
+              <Tags tags={props.tags} />
+            </div>
           </div>
           <div className="mt-2">
             <h2 className="text-md ">
