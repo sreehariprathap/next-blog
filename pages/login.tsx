@@ -30,9 +30,7 @@ const SignInButton = () => {
   const signInWithGoogle = async () => {
     await signInWithPopup(auth, provider)
       .then((result: any) => {
-        console.log(result)
         var userData = result.user
-        console.log(userData)
         axios
           .post("http://localhost:3000/api/users/create", {
             id: userData.uid,

@@ -68,15 +68,15 @@ const PostFeed = (props: any) => {
             <div className="flex gap-5 ">
               <div className="flex gap-3  hover:bg-slate-100 rounded-xl p-2 duration-200 ease">
                 <HeartIcon className="h-6 w-6 text-slate-300 hover:text-pink-600 duration-200 ease" />
-                {props.heartCount} reactions
+                {props.heartCount} <span className="xsm:hidden lg:block">reactions</span> 
               </div>
               <div className="flex gap-3  hover:bg-slate-100 rounded-xl p-2 duration-200 ease">
                 <ChatBubbleLeftIcon className="h-6 w-6 text-slate-300 hover:text-green-600 duration-200 ease" />
-                {props.heartCount} comments
+                {props.heartCount} <span className="xsm:hidden lg:block">comments</span> 
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <p>{readingTime(props.content)} mins read</p>
+              <p>{readingTime(props.content)} mins<span className="xsm:hidden lg:block">read</span> </p>
               <div className="flex gap-3   rounded-xl p-2 duration-200 ease">
                 <BookmarkIcon className="h-6 w-6 text-slate-300 hover:text-blue-600 duration-200 ease" />
               </div>

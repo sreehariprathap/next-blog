@@ -7,6 +7,8 @@ import { UserContext } from "../lib/context"
 import router, { useRouter } from "next/router"
 import { ReactSearchAutocomplete } from "react-search-autocomplete"
 import axios from "axios"
+import logoBlack from "../public/black-logo.png"
+import Image from "next/image"
 
 const NavBar = () => {
   const { user, username, userDp } = useContext(UserContext)
@@ -47,13 +49,14 @@ const NavBar = () => {
   }
 
   return (
-    <nav className="flex justify-between items-center px-5 shadow-md bg-white">
+    <nav className="flex justify-between items-center px-5 shadow-md bg-white w-full">
       <div className="flex gap-5 justify-center items-center">
         <div className="my-2">
           <Link href={"/"}>
-            <p className="rounded-md bg-slate-900 text-2xl text-slate-100 p-2 m-1">
+            <Image src={logoBlack} width={125} height={75} />
+            {/* <p className="rounded-md bg-slate-900 text-2xl text-slate-100 p-2 m-1">
               Blog
-            </p>
+            </p> */}
           </Link>
         </div>
         <div className="xsm:hidden lg:flex">
@@ -81,11 +84,11 @@ const NavBar = () => {
                   <button className="xsm:hidden lg:btn btn-secondary  border-none text-black ">
                     Create Post
                   </button>
+                  <button className="btn bg-transparent border-none rounded-full text-black hover:text-purple-700 hover:bg-purple-100 lg:hidden">
+                    <PlusIcon className="h-6 w-6 text-black hover:text-purple-700 hover:bg-purple-100" />
+                  </button>
                 </Link>
               ) : null}
-              <button className="btn bg-transparent border-none rounded-full text-black hover:text-purple-700 hover:bg-purple-100 lg:hidden">
-                <PlusIcon className="h-6 w-6 text-black hover:text-purple-700 hover:bg-purple-100" />
-              </button>
             </div>
             <div>
               <button className="btn bg-transparent border-none rounded-full text-black hover:text-purple-700 hover:bg-purple-100">

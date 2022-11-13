@@ -5,7 +5,7 @@ import ListItem from "./ListItem"
 
 const SuggestionsBar = () => {
   return (
-    <div className="sticky left-0 w-3/12  h-screen my-3">
+    <div className="xsm:hidden lg:block sticky left-0 w-3/12  h-screen my-3">
       <div className={`${styles.listings} mb-4 py-3`}>
         <div className="flex justify-between items-baseline p-3">
           <h2 className="text-xl font-bold">Listings</h2>

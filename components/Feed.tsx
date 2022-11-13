@@ -10,7 +10,6 @@ import style from "../styles/feed.module.scss"
 import Tags from "./Tags"
 
 const Feed = (props: any) => {
-  const [post, setPost] = useState(null)
   const readingTime = (content: string) => {
     const wpm = 225
     const words = content.trim().split(/\s+/).length
@@ -64,7 +63,7 @@ const Feed = (props: any) => {
   }
 
   return (
-    <div className="card shadow-sm rounded-sm">
+    <div className="card shadow-sm rounded-md hover:border-blue-300 border-2 ease duration-200">
       {props.postImage ? (
         <figure className="h-72">
           <img src={props.postImage} className="w-full object-contain" />
@@ -97,15 +96,20 @@ const Feed = (props: any) => {
               } hover:animate-bounce ease `}
               onClick={handleSubmit}
             />
-            {props.heartCount} reactions
+            {props.heartCount}{" "}
+            <span className="xsm:hidden lg:block"> reactions</span>
           </div>
           <div className="flex gap-3  hover:bg-slate-100 rounded-xl p-2 duration-200 ease">
             <ChatBubbleLeftIcon className="h-6 w-6 text-slate-300 hover:text-green-600 duration-200 ease" />
-            {props.heartCount} comments
+            {props.heartCount}
+            <span className="xsm:hidden lg:block">comments</span>
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <p>{readingTime(props.content)} mins read</p>
+        <div className="flex flex-row items-center gap-3">
+          <p className="flex">
+            {readingTime(props.content)} &nbsp; mins
+            <span className="xsm:hidden lg:block">&nbsp; read</span>
+          </p>
           <div
             className="flex gap-3   rounded-xl p-2 duration-200 ease"
             onClick={handleBookmark}

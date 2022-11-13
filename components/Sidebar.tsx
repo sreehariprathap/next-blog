@@ -4,7 +4,7 @@ import styles from "../styles/sidebar.module.scss"
 
 const Sidebar = () => {
   return (
-    <div className="sticky left-0 w-3/12  h-screen">
+    <div className="xsm:hidden lg:block sticky left-0 w-3/12  h-screen">
       <ul className="flex flex-col items-start pl-5 justify-center pt-10 gap-1">
         <li className={styles.option}>
           <Link href={"/"}>
@@ -43,14 +43,14 @@ const Sidebar = () => {
         </li>
 
         <li className={styles.option}>
-          <Link href={"/"}>
+          <Link href={"about"}>
             <div>
               <span>🌈 About</span>
             </div>
           </Link>
         </li>
         <li className={styles.option}>
-          <Link href={"/"}>
+          <Link href={"contact"}>
             <div>
               <span>📞 Contact</span>
             </div>

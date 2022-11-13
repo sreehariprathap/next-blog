@@ -12,7 +12,6 @@ const PostComponent = () => {
   const { slug } = router.query
   useEffect(() => {
     axios.get(`http://localhost:3000/api/posts/${slug}`).then((res: any) => {
-      console.log(res.data)
       setPost(res.data.feed)
       setAuthor(res.data.user)
     })
@@ -20,7 +19,6 @@ const PostComponent = () => {
 
   const likeEvent = () => {
     axios.get(`http://localhost:3000/api/posts/${slug}`).then((res: any) => {
-      console.log(res.data)
       setPost(res.data.feed)
       setAuthor(res.data.user)
     })
@@ -34,7 +32,6 @@ const PostComponent = () => {
     const returndate = [year, month, day].join("-")
     return returndate
   }
-  console.log(post)
 
   if (post) {
     return (

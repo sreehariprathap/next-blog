@@ -84,7 +84,6 @@ const profile = () => {
       })
   }, [])
 
-
   return (
     <>
       <div
@@ -203,6 +202,7 @@ const profile = () => {
                     <PostFeed
                       postImage={post.imageUrl}
                       title={post.title}
+                      key={post.id}
                       content={post.content}
                       author={post.author}
                       heartCount={post.heartCount}
@@ -230,7 +230,6 @@ const AddSocialForm = (props: any) => {
   const { register, handleSubmit } = useForm()
 
   const addSocialUrl = (data: any) => {
-    console.log(data)
     const id = localStorage.getItem("uid")
     data.id = id
     axios

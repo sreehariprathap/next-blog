@@ -22,7 +22,6 @@ const PostSidebar = (props: any) => {
     like(props.id)
     props.likeFunction() // calling the method
   }
-  console.log(props)
 
   return (
     <div className="sticky left-0 w-1/12  h-screen">

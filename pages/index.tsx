@@ -40,7 +40,6 @@ export default function Home() {
         setPosts(res.data)
       })
   }
-  console.log(posts)
 
   return (
     <div className={`${styles.container} h-full`}>
@@ -57,6 +56,7 @@ export default function Home() {
                     <Feed
                       postImage={post.imageUrl}
                       title={post.title}
+                      key="{post.id}"
                       content={post.content}
                       heartCount={post.heartCount}
                       comments={post.comments}
