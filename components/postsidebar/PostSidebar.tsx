@@ -22,15 +22,16 @@ const PostSidebar = (props: any) => {
     like(props.id)
     props.likeFunction() // calling the method
   }
+  console.log(props)
 
   return (
-    <div className="sticky left-0 w-1/12  h-screen">
+    <div className="sticky left-0 w-1/12  h-screen ">
       <div className="flex flex-col gap-7 p-5 mt-3">
         <div className="flex flex-col items-center">
           <HeartIcon
-            className={`${style.iconHeart} ${
+            className={` ${
               props.heartCount > 0 ? "text-pink-600" : "text-slate-300"
-            }`}
+            }  w-8 h-8  hover:animate-pulse  hover:text-pink-600 ease-in duration-100`}
             onClick={handleSubmit}
           />
           <h2 className="font-medium mt-2 ">{props.heartCount}</h2>
@@ -41,9 +42,9 @@ const PostSidebar = (props: any) => {
         </div>
         <div className="flex flex-col items-center">
           <BookmarkIcon
-            className={`${style.iconBookmark} ${
+            className={`${
               props.isBookmarked ? "text-blue-600" : "text-slate-300"
-            } `}
+            } w-8 h-8 hover:animate-pulse ease-in duration-100`}
           />
           {/* <h2 className="font-medium mt-2">52</h2> */}
         </div>

@@ -9,6 +9,7 @@ import { ReactSearchAutocomplete } from "react-search-autocomplete"
 import axios from "axios"
 import logoBlack from "../public/black-logo.png"
 import Image from "next/image"
+import MobileCategory from "./MobileCategory"
 
 const NavBar = () => {
   const { user, username, userDp } = useContext(UserContext)
@@ -95,6 +96,7 @@ const NavBar = () => {
                 <BellIcon className="h-6 w-6 text-black hover:text-purple-700 hover:bg-purple-100" />
               </button>
             </div>
+            <MobileCategory />
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">

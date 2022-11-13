@@ -19,7 +19,7 @@ export default function Home() {
   }
   useEffect(() => {
     const id = localStorage.getItem("uid")
-    getPosts(id)
+    getPosts(id ? id : "0")
   }, [])
 
   const likeEvent = () => {

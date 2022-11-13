@@ -44,7 +44,7 @@ const PostComponent = () => {
           isBookmarked={post.isBookmarked}
         />
         <div className="w-11/12 px-4 ">
-          <div className="bg-white card mt-4 w-full">
+          <div className="bg-white card mt-4 w-full shadow-md">
             {/* {post ? JSON.stringify(post) : "dude"} */}
             {post.imageUrl ? (
               <figure className="h-72 rounded-xl">
