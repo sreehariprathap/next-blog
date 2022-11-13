@@ -10,11 +10,18 @@ import style from "../styles/feed.module.scss"
 import Tags from "./Tags"
 
 const Feed = (props: any) => {
+  const [post, setPost] = useState(null)
   const readingTime = (content: string) => {
     const wpm = 225
     const words = content.trim().split(/\s+/).length
     const time = Math.ceil(words / wpm)
     return time
+  }
+
+  function handleSubmit(event: any) {
+    event.preventDefault()
+    like(props.id)
+    props.likeFunction() // calling the method
   }
 
   const truncateWithEllipsis = (content: string, maxLength: number) => {
@@ -38,6 +45,21 @@ const Feed = (props: any) => {
       .patch("http://localhost:3000/api/posts/heart", { id: id })
       .then(() => {
         toast.success("post liked")
+      })
+  }
+
+  const handleBookmark = (event: any) => {
+    event?.preventDefault()
+    const id = localStorage.getItem("uid")
+    const postId = props.id
+    axios
+      .post("http://localhost:3000/api/users/bookmarks/toggle-bookmark", {
+        authorId: id,
+        postId: postId,
+      })
+      .then((res: any) => {
+        toast.success(res.data.message)
+        props.bookmarkFunction()
       })
   }
 
@@ -73,7 +95,7 @@ const Feed = (props: any) => {
               className={`h-6 w-6  ${
                 props.heartCount > 0 ? "text-pink-600" : "text-slate-300"
               } hover:animate-bounce ease `}
-              onClick={() => like(props.id)}
+              onClick={handleSubmit}
             />
             {props.heartCount} reactions
           </div>
@@ -84,8 +106,15 @@ const Feed = (props: any) => {
         </div>
         <div className="flex items-center gap-3">
           <p>{readingTime(props.content)} mins read</p>
-          <div className="flex gap-3   rounded-xl p-2 duration-200 ease">
-            <BookmarkIcon className="h-6 w-6 text-slate-300 hover:text-blue-600 duration-200 ease" />
+          <div
+            className="flex gap-3   rounded-xl p-2 duration-200 ease"
+            onClick={handleBookmark}
+          >
+            <BookmarkIcon
+              className={`h-6 w-6  ${
+                props.isBookmarked ? "text-blue-600" : "text-slate-300"
+              } duration-200 ease`}
+            />
           </div>
         </div>
       </footer>

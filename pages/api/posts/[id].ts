@@ -18,5 +18,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       name: true,
     },
   })
+  if (feed) {
+    const bookmarkedPost = await prisma.bookmark.findFirst({
+      where: {
+        postId: feed.id,
+        authorId: feed.authorId,
+      },
+    })
+    if (bookmarkedPost?.postId === feed.id) {
+      feed.isBookmarked = true
+    } else {
+      feed.isBookmarked = false
+    }
+  }
   res.send({ feed, user })
 }

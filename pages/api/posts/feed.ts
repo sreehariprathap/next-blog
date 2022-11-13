@@ -16,7 +16,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     select: {
       id: true,
       imageUrl: true,
-      name:true
+      name: true,
+    },
+  })
+  const bookmarks = await prisma.bookmark.findMany({
+    where: {
+      authorId: req.body.userId,
+      postId: req.body.postId,
     },
   })
   userData.forEach((user: any) => {
@@ -27,5 +33,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
     })
   })
-  res.send( feed )
+
+  feed.forEach((item: any) => {
+    bookmarks.forEach((bookMark: any) => {
+      if (item.id === bookMark.postId) {
+        item.isBookmarked = true
+      } else {
+        item.isBookmarked = false
+      }
+    })
+  })
+  res.send({ feed, bookmarks })
 }

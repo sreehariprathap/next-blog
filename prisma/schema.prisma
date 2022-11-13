@@ -61,3 +61,11 @@ model Tag {
   name String?
   postId String[]
 }
+
+model Bookmark {
+  id Int  @id @default(autoincrement())
+  authorId  String?
+  postId  String?
+  //  author    User?   @relation(fields: [authorId], references: [id])
+  //  post Post? @relation(fields: [postId], references: [id])
+}

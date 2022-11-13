@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import Error404 from "../../components/Error404"
 import PostSidebar from "../../components/postsidebar/PostSidebar"
-import Tags from "../api/tags"
+import Tags from "../../components/Tags"
 
 const PostComponent = () => {
   const [post, setPost] = useState(null)
@@ -18,6 +18,14 @@ const PostComponent = () => {
     })
   }, [])
 
+  const likeEvent = () => {
+    axios.get(`http://localhost:3000/api/posts/${slug}`).then((res: any) => {
+      console.log(res.data)
+      setPost(res.data.feed)
+      setAuthor(res.data.user)
+    })
+  }
+
   const getDate = (dateValue: string) => {
     const date = new Date(dateValue)
     const year = date.getFullYear()
@@ -26,11 +34,18 @@ const PostComponent = () => {
     const returndate = [year, month, day].join("-")
     return returndate
   }
+  console.log(post)
 
   if (post) {
     return (
       <div className="flex">
-        <PostSidebar />
+        <PostSidebar
+          heartCount={post.heartCount}
+          comments={post.comments}
+          likeFunction={likeEvent}
+          id={slug}
+          isBookmarked={post.isBookmarked}
+        />
         <div className="w-11/12 px-4 ">
           <div className="bg-white card mt-4 w-full">
             {/* {post ? JSON.stringify(post) : "dude"} */}
@@ -50,10 +65,8 @@ const PostComponent = () => {
               </div>
               <div className="my-4">
                 <h2 className="text-5xl font-bold mb-5">{post.title}</h2>
-                {/* <Tags tags={post.tags} /> */}
-                <p className="mt-2">
-                  {post.content}
-                </p>
+                <Tags tags={post.tags} />
+                <p className="mt-2">{post.content}</p>
               </div>
             </div>
           </div>

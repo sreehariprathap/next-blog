@@ -14,7 +14,6 @@ export default function Home() {
     axios
       .post("http://localhost:3000/api/posts/feed", { userId: id })
       .then((res: any) => {
-        console.log("called useeffect")
         setPosts(res.data)
       })
   }
@@ -22,6 +21,26 @@ export default function Home() {
     const id = localStorage.getItem("uid")
     getPosts(id)
   }, [])
+
+  const likeEvent = () => {
+    //Do something
+    const id = localStorage.getItem("uid")
+    axios
+      .post("http://localhost:3000/api/posts/feed", { userId: id })
+      .then((res: any) => {
+        setPosts(res.data)
+      })
+  }
+
+  const bookmarkEvent = () => {
+    const id = localStorage.getItem("uid")
+    axios
+      .post("http://localhost:3000/api/posts/feed", { userId: id })
+      .then((res: any) => {
+        setPosts(res.data)
+      })
+  }
+  console.log(posts)
 
   return (
     <div className={`${styles.container} h-full`}>
@@ -46,6 +65,9 @@ export default function Home() {
                       authorImage={post.authorImageUrl}
                       tags={post.tags}
                       author={post.authorName}
+                      likeFunction={likeEvent}
+                      isBookmarked={post.isBookmarked}
+                      bookmarkFunction={bookmarkEvent}
                     />
                   </Link>
                 </>

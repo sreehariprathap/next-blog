@@ -81,9 +81,9 @@ const profile = () => {
         //   post.createdAt = new Date(post.createdAt)
         // })
         setPosts(res.data)
-        console.log(res.data)
       })
   }, [])
+
 
   return (
     <>
