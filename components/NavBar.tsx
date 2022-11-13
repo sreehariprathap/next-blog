@@ -4,70 +4,43 @@ import { BellIcon, PlusIcon } from "@heroicons/react/24/solid"
 import { signOut } from "firebase/auth"
 import { auth } from "../lib/firebase"
 import { UserContext } from "../lib/context"
-import router from "next/router"
+import router, { useRouter } from "next/router"
 import { ReactSearchAutocomplete } from "react-search-autocomplete"
 import axios from "axios"
 
 const NavBar = () => {
   const { user, username, userDp } = useContext(UserContext)
-  const item = [
-    {
-      id: 0,
-      name: "Cobol",
-    },
-    {
-      id: 1,
-      name: "JavaScript",
-    },
-    {
-      id: 2,
-      name: "Basic",
-    },
-    {
-      id: 3,
-      name: "PHP",
-    },
-    {
-      id: 4,
-      name: "Java",
-    },
-  ]
-  const [items, setItems] = useState(item)
-  // note: the id field is mandatory
+  const [items, setItems] = useState([])
+  const router = useRouter()
+
   useEffect(() => {
-    axios.get("http://localhost:3000/api/posts").then((res: any) => {
-      setItems(res.data)
-    })
+    const userId = localStorage.getItem("uid")
+    axios
+      .post("http://localhost:3000/api/posts/search-result", {
+        userId: userId,
+      })
+      .then((res: any) => {
+        res.data.forEach((item: any) => {
+          item.name = item.title
+        })
+        setItems(res.data)
+      })
   }, [])
 
   const handleOnSearch = (string: any, results: any) => {
-    // onSearch will have as the first callback parameter
-    // the string searched and for the second the results.
-    console.log(string, results)
+    // implement logic for search
   }
 
-  const handleOnHover = (result: any) => {
-    // the item hovered
-    console.log(result)
-  }
-
-  const handleOnSelect = (item: any) => {
+  const handleOnSelect = (items: any) => {
     // the item selected
-    console.log(item)
+    router.push(`posts/${items.id}`)
   }
 
-  const handleOnFocus = () => {
-    console.log("Focused")
-  }
-
-  const formatResult = (item: any) => {
+  const formatResult = (items: any) => {
     return (
       <>
         <span style={{ display: "block", textAlign: "left" }}>
-          id: {item.id}
-        </span>
-        <span style={{ display: "block", textAlign: "left" }}>
-          name: {item.name}
+          {items.name}
         </span>
       </>
     )
@@ -84,22 +57,18 @@ const NavBar = () => {
           </Link>
         </div>
         <div className="xsm:hidden lg:flex">
-          {/* <input
-            type="text"
-            placeholder="Search"
-            className="input w-full max-w-xs"
-          /> */}
-          <div style={{ width: 400 }}>
-            <ReactSearchAutocomplete
-              items={items}
-              onSearch={handleOnSearch}
-              onHover={handleOnHover}
-              onSelect={handleOnSelect}
-              onFocus={handleOnFocus}
-              autoFocus
-              formatResult={formatResult}
-            />
-          </div>
+          {router.pathname === "/" ? (
+            <div style={{ width: 400 }} className="z-10">
+              <ReactSearchAutocomplete
+                items={items}
+                onSearch={handleOnSearch}
+                onSelect={handleOnSelect}
+                formatResult={formatResult}
+                // autoFocus
+                placeholder={"search for posts..."}
+              />
+            </div>
+          ) : null}
         </div>
       </div>
       <div className="flex gap-5">
@@ -107,11 +76,13 @@ const NavBar = () => {
         {user && (
           <>
             <div>
-              <Link href={"/posts/create"}>
-                <button className="xsm:hidden lg:btn btn-secondary  border-none text-black ">
-                  Create Post
-                </button>
-              </Link>
+              {router.pathname === "/" ? (
+                <Link href={"/posts/create"}>
+                  <button className="xsm:hidden lg:btn btn-secondary  border-none text-black ">
+                    Create Post
+                  </button>
+                </Link>
+              ) : null}
               <button className="btn bg-transparent border-none rounded-full text-black hover:text-purple-700 hover:bg-purple-100 lg:hidden">
                 <PlusIcon className="h-6 w-6 text-black hover:text-purple-700 hover:bg-purple-100" />
               </button>

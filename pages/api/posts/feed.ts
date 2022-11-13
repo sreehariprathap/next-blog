@@ -43,5 +43,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
     })
   })
-  res.send({ feed, bookmarks })
+  res.send(feed)
 }
