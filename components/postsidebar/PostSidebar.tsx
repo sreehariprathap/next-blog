@@ -17,7 +17,7 @@ const PostSidebar = (props: any) => {
       })
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event: any) {
     event.preventDefault()
     like(props.id)
     props.likeFunction() // calling the method
