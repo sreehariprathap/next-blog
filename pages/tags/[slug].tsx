@@ -40,7 +40,7 @@ const PostsByTags = () => {
     <div>
       <h1 className="text-4xl font-bold p-5">#{slug}</h1>
       <div className="px-4 py-2 flex flex-col gap-4">
-        {posts ? (
+        {posts.length ? (
           posts.map((post: any) => {
             return (
               <>

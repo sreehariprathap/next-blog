@@ -36,10 +36,10 @@ const PostSidebar = (props: any) => {
           />
           <h2 className="font-medium mt-2 ">{props.heartCount}</h2>
         </div>
-        <div className="flex flex-col items-center">
+        {/* <div className="flex flex-col items-center">
           <ChatBubbleLeftIcon className={style.iconComment} />
           <h2 className="font-medium mt-2">{props.heartCount}</h2>
-        </div>
+        </div> */}
         <div className="flex flex-col items-center">
           <BookmarkIcon
             className={`${

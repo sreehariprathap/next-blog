@@ -1,4 +1,5 @@
 import axios from "axios"
+import Link from "next/link"
 import React, { useEffect, useState } from "react"
 import Backbuttonbar from "../../components/Backbuttonbar"
 
@@ -29,23 +30,25 @@ const index = () => {
   const random = Math.floor(Math.random() * colorBands.length)
   console.log(colorBands[random])
   return (
-   <div className="flex">
-    <Backbuttonbar/>
-     <div className="px-3">
-      <h1 className="text-4xl font-bold p-5">#Tags</h1>
-      <div className="flex gap-5 flex-wrap w-full p-5 ">
-        {tags.map((tag: any) => {
-          return (
-            <h1
-              className={`w-32 px-2 py-2 font-bold shadow-md text-white rounded-2xl bg-blue-500 text-center hover:scale-105 hover:shadow-lg ease-in duration-150`}
-            >
-              #{tag.name}
-            </h1>
-          )
-        })}
+    <div className="flex">
+      <Backbuttonbar />
+      <div className="px-3">
+        <h1 className="text-4xl font-bold p-5">#Tags</h1>
+        <div className="flex gap-5 flex-wrap w-full p-5 ">
+          {tags.map((tag: any) => {
+            return (
+              <Link href={`tags/${tag.name}`}>
+                <h1
+                  className={`w-32 px-2 py-2 font-bold shadow-md text-white rounded-2xl bg-blue-500 text-center hover:scale-105 hover:shadow-lg ease-in duration-150`}
+                >
+                  #{tag.name}
+                </h1>
+              </Link>
+            )
+          })}
+        </div>
       </div>
     </div>
-   </div>
   )
 }
 
