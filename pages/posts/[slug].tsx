@@ -1,19 +1,22 @@
 import axios from "axios"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
-import Error404 from "../../components/Error404"
+import Loader from "../../components/Loader"
 import PostSidebar from "../../components/postsidebar/PostSidebar"
 import Tags from "../../components/Tags"
 
 const PostComponent = () => {
   const [post, setPost] = useState(null)
   const [author, setAuthor] = useState(null)
+  const [loader, setLoader] = useState(false)
   const router = useRouter()
   const { slug } = router.query
   useEffect(() => {
+    setLoader(true)
     axios.get(`http://localhost:3000/api/posts/${slug}`).then((res: any) => {
       setPost(res.data.feed)
       setAuthor(res.data.user)
+      setLoader(false)
     })
   }, [])
 
@@ -71,7 +74,7 @@ const PostComponent = () => {
       </div>
     )
   }
-  return <Error404 />
+  return <Loader show={loader} />
 }
 
 export default PostComponent

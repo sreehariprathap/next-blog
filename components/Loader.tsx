@@ -1,16 +1,21 @@
+import { Backdrop, CircularProgress } from "@mui/material"
 import React from "react"
-import style from "../styles/loader.module.css"
+import Error404 from "./Error404"
 
-const Loader: React.FC<{ show: boolean }> = ({ show }) => {
-  return show ? (
-    <div className={style.backdrop}>
-      <div className={style.textCenter}>
-        <div className={style.spinnerBorder} role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      </div>
+const Loader = (props: any) => {
+ if( props.show) {
+  return (
+    <div>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={props.show}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Error404 />
     </div>
-  ) : null
+  )
+ }
 }
 
 export default Loader

@@ -7,13 +7,13 @@ import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import PostFeed from "../../components/PostFeed"
 import Loader from "../../components/Loader"
-import router, { Router } from "next/router"
 
 const profile = () => {
   const { username } = useContext(UserContext)
   const [picture, setPicture] = useState(
     "https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745"
   )
+  const [loader, setLoader] = useState(false)
   const [name, setName] = useState("")
   const [backGround, setBackGround] = useState(
     "https://img.freepik.com/premium-vector/big-set-abstract-hand-drawn-doodles-arrow-heart-cloud-sun-star-line-art_6997-3393.jpg?w=2000"
@@ -50,6 +50,7 @@ const profile = () => {
   }
 
   useEffect(() => {
+    setLoader(true)
     const id = localStorage.getItem("uid")
     axios.get(`http://localhost:3000/api/users/${id}`).then((res: any) => {
       setName(res.data.name)
@@ -69,10 +70,12 @@ const profile = () => {
         setWeb(res.data.websiteUrl)
         setSocials(true)
       }
+      setLoader(false)
     })
   }, [])
 
   useEffect(() => {
+    setLoader(true)
     const id = localStorage.getItem("uid")
     axios
       .get(`http://localhost:3000/api/users/posts/${id}`)
@@ -81,9 +84,12 @@ const profile = () => {
         //   post.createdAt = new Date(post.createdAt)
         // })
         setPosts(res.data)
+        setLoader(false)
       })
   }, [])
-
+  if (loader) {
+    return <Loader show={loader} />
+  }
   return (
     <>
       <div

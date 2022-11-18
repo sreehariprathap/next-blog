@@ -9,12 +9,15 @@ import styles from "../styles/Home.module.css"
 
 export default function Home() {
   const [posts, setPosts] = useState([])
+  const [loader, setLoader] = useState(false)
 
   const getPosts = (id: string) => {
+    setLoader(true)
     axios
       .post("http://localhost:3000/api/posts/feed", { userId: id })
       .then((res: any) => {
         setPosts(res.data)
+        setLoader(false)
       })
   }
   useEffect(() => {
@@ -43,7 +46,7 @@ export default function Home() {
 
   return (
     <div className={`${styles.container} h-full`}>
-      <Loader show={false} />
+      <Loader show={loader} />
       <div className="flex gap-4">
         <Sidebar />
         <div className="w-full my-4 flex gap-4 flex-col">

@@ -3,17 +3,21 @@ import Link from "next/link"
 import router from "next/router"
 import React, { useEffect, useState } from "react"
 import Feed from "../../components/Feed"
+import Loader from "../../components/Loader"
 
 const PostsByTags = () => {
   const [posts, setPosts] = useState([])
+  const [loader, setLoader] = useState(false)
   const { slug } = router.query
   useEffect(() => {
+    setLoader(true)
     axios
       .post("http://localhost:3000/api/posts/get-posts-by-tag", {
         tag: slug,
       })
       .then((res: any) => {
         setPosts(res.data)
+        setLoader(false)
       })
   }, [])
 
@@ -35,7 +39,9 @@ const PostsByTags = () => {
         setPosts(res.data)
       })
   }
-
+  if (loader) {
+    return <Loader show={loader} />
+  }
   return (
     <div>
       <h1 className="text-4xl font-bold p-5">#{slug}</h1>
