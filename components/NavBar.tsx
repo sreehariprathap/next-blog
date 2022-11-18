@@ -92,9 +92,9 @@ const NavBar = () => {
               ) : null}
             </div>
             <div>
-              <button className="btn bg-transparent border-none rounded-full text-black hover:text-purple-700 hover:bg-purple-100">
+              {/* <button className="btn bg-transparent border-none rounded-full text-black hover:text-purple-700 hover:bg-purple-100">
                 <BellIcon className="h-6 w-6 text-black hover:text-purple-700 hover:bg-purple-100" />
-              </button>
+              </button> */}
             </div>
             <MobileCategory />
             <div className="dropdown dropdown-end">
