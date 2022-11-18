@@ -12,7 +12,7 @@ const Loader = (props: any) => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Error404 />
+      {/* <Error404 /> */}
     </div>
   )
  }
