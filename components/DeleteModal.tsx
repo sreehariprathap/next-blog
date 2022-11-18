@@ -13,7 +13,13 @@ const DeleteModal = (props: any) => {
     <div>
       {/* The button to open modal */}
       <label htmlFor="my-modal" className=" btn-secondary">
-        <TrashIcon className="text-red-400 h-6 w-6" />
+        <TrashIcon
+          className="text-red-400 h-6 w-6"
+          onClick={(e) => {
+            e.preventDefault()
+            deletePost(props.id)
+          }}
+        />
       </label>
 
       {/* Put this part before </body> tag */}
@@ -27,7 +33,9 @@ const DeleteModal = (props: any) => {
             <label
               className="btn btn-error"
               htmlFor="my-modal"
-              onClick={() => deletePost(props.id)}
+              onClick={(e: any) => {
+                deletePost(props.id)
+              }}
             >
               Delete
             </label>

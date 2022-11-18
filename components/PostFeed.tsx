@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import Tags from "./Tags"
 import {
   HeartIcon,
@@ -6,6 +6,7 @@ import {
   BookmarkIcon,
 } from "@heroicons/react/24/solid"
 import DeleteModal from "./DeleteModal"
+import axios from "axios"
 
 const PostFeed = (props: any) => {
   const readingTime = (content: string) => {
@@ -32,6 +33,7 @@ const PostFeed = (props: any) => {
     return content
   }
 
+
   return (
     <>
       <div className="card shadow rounded-xl p-3">
@@ -48,7 +50,9 @@ const PostFeed = (props: any) => {
             <div className="flex">
               {!props.author ? (
                 <div>
-                  <DeleteModal id={props.id} />
+                  <DeleteModal
+                    id={props.id}
+                  />
                 </div>
               ) : null}
             </div>
@@ -68,7 +72,8 @@ const PostFeed = (props: any) => {
             <div className="flex gap-5 ">
               <div className="flex gap-3  hover:bg-slate-100 rounded-xl p-2 duration-200 ease">
                 <HeartIcon className="h-6 w-6 text-slate-300 hover:text-pink-600 duration-200 ease" />
-                {props.heartCount} <span className="xsm:hidden lg:block">reactions</span> 
+                {props.heartCount}{" "}
+                <span className="xsm:hidden lg:block">reactions</span>
               </div>
               {/* <div className="flex gap-3  hover:bg-slate-100 rounded-xl p-2 duration-200 ease">
                 <ChatBubbleLeftIcon className="h-6 w-6 text-slate-300 hover:text-green-600 duration-200 ease" />
@@ -76,7 +81,10 @@ const PostFeed = (props: any) => {
               </div> */}
             </div>
             <div className="flex items-center gap-3">
-              <p>{readingTime(props.content)} mins<span className="xsm:hidden lg:block">read</span> </p>
+              <p>
+                {readingTime(props.content)} mins
+                <span className="xsm:hidden lg:block">read</span>{" "}
+              </p>
               <div className="flex gap-3   rounded-xl p-2 duration-200 ease">
                 <BookmarkIcon className="h-6 w-6 text-slate-300 hover:text-blue-600 duration-200 ease" />
               </div>
