@@ -1,0 +1,16 @@
+
+.title {
+  font-weight: 700;
+  font-size: xx-large;
+  &:focus {
+    outline: none;
+  }
+
+}
+
+.content {
+  &:focus {
+    outline: none;
+  }
+
+}

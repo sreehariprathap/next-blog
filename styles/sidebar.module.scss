@@ -1,0 +1,6 @@
+@tailwind components;
+@tailwind utilities;
+
+.option {
+  @apply p-3 w-full rounded-2xl hover:bg-blue-200 ease-linear duration-100;
+}

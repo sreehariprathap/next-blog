@@ -1,36 +1,90 @@
+import axios from "axios"
 import Link from "next/link"
-import toast from "react-hot-toast"
+import { useEffect, useState } from "react"
+import Feed from "../components/Feed"
 import Loader from "../components/Loader"
-import prisma from "../util/prisma"
-import PostFeedLayout from "../layouts/PostFeedLayout"
+import Sidebar from "../components/Sidebar"
+import SuggestionsBar from "../components/SuggestionsBar"
 import styles from "../styles/Home.module.css"
-import { GetStaticProps } from "next"
 
 export default function Home() {
+  const [posts, setPosts] = useState([])
+  const [loader, setLoader] = useState(false)
+
+  const getPosts = (id: string) => {
+    setLoader(true)
+    axios
+      .post(`${process.env.API_URL}api/posts/feed`, { userId: id })
+      .then((res: any) => {
+        setPosts(res.data)
+        setLoader(false)
+      })
+  }
+  useEffect(() => {
+    console.log(process.env.API_URL)
+    const id = localStorage.getItem("uid")
+    getPosts(id ? id : "0")
+  }, [])
+
+  const likeEvent = () => {
+    //Do something
+    const id = localStorage.getItem("uid")
+    axios
+      .post(`${process.env.API_URL}api/posts/feed`, { userId: id })
+      .then((res: any) => {
+        setPosts(res.data)
+      })
+  }
+
+  const bookmarkEvent = () => {
+    const id = localStorage.getItem("uid")
+    axios
+      .post(`${process.env.API_URL}api/posts/feed`, { userId: id })
+      .then((res: any) => {
+        setPosts(res.data)
+      })
+  }
+
   return (
-    <div className={styles.container}>
-      <Loader show={false} />
-      <PostFeedLayout />
+    <div className={`${styles.container} h-full`}>
+      <Loader show={loader} />
+      <div className="flex gap-4">
+        <Sidebar />
+        <div className="w-full my-4 flex gap-4 flex-col">
+          {/* <PostFeedLayout /> */}
+          {posts ? (
+            posts.map((post: any) => {
+              return (
+                <>
+                  <Link href={`posts/${post.id}`}>
+                    <Feed
+                      postImage={post.imageUrl}
+                      title={post.title}
+                      key="{post.id}"
+                      content={post.content}
+                      heartCount={post.heartCount}
+                      comments={post.comments}
+                      id={post.id}
+                      date={post.createdAt}
+                      authorImage={post.authorImageUrl}
+                      tags={post.tags}
+                      author={post.authorName}
+                      likeFunction={likeEvent}
+                      isBookmarked={post.isBookmarked}
+                      bookmarkFunction={bookmarkEvent}
+                    />
+                  </Link>
+                </>
+              )
+            })
+          ) : (
+            <h2 className="text-center my-2 text-lg font-medium">
+              No posts to display
+            </h2>
+          )}
+        </div>
+        <SuggestionsBar />
+      </div>
     </div>
   )
 }
-// index.tsx
-export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.post.findMany({
-    where: { published: true },
-    include: {
-      author: {
-        select: { name: true },
-      },
-    },
-  })
-  console.log(feed)
-  return {
-    props: { feed },
-    revalidate: 10,
-  }
-}
-
-// type Props = {
-//   feed: PostProps[]
-// }

@@ -1,29 +1,23 @@
 import { GoogleAuthProvider, signOut, signInWithPopup } from "firebase/auth"
-import { doc, getDoc, writeBatch } from "firebase/firestore"
+import { doc, getDoc, onSnapshot, writeBatch } from "firebase/firestore"
 import React, { useCallback, useContext, useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { UserContext } from "../lib/context"
 import { auth, db, provider } from "../lib/firebase"
 import { debounce } from "lodash"
 import { async } from "@firebase/util"
+import axios from "axios"
+import router from "next/router"
 
 const Login = (props: any) => {
-  const { user, username } = useContext(UserContext)
+  const { user } = useContext(UserContext)
 
   return (
     <>
       <main className="flex justify-center items-center mt-10">
         <div className="card  bg-slate-100 shadow-md xsm:w-10/12 lg:w-5/12 h-[50vh] p-10 flex justify-evenly">
           <div className="flex justify-center">
-            {user ? (
-              !username ? (
-                <UsernameForm />
-              ) : (
-                <SignOutButton />
-              )
-            ) : (
-              <SignInButton />
-            )}
+            {user ? <SignOutButton /> : <SignInButton />}
           </div>
         </div>
       </main>
@@ -35,11 +29,30 @@ const Login = (props: any) => {
 const SignInButton = () => {
   const signInWithGoogle = async () => {
     await signInWithPopup(auth, provider)
-      .then((result: any) => {})
+      .then((result: any) => {
+        var userData = result.user
+        axios
+          .post(
+            `${process.env.API_URL}api/users/create`, {
+            id: userData.uid,
+            name: userData.displayName,
+            email: userData.email,
+            imageUrl: userData.photoURL,
+          })
+          .then((response: any) => {
+            if (response === "user created") {
+              toast.success("account created")
+            }
+            toast.success("login successfull")
+            localStorage.setItem("uid", userData.uid)
+            router.push("/")
+          })
+      })
       .catch((err) => {
         toast.error(err.message)
       })
   }
+
   return (
     <div className="flex flex-col justify-center items-center gap-5">
       <h2 className="text-black text-center xsm:text-xl lg:text-3xl font-light">
@@ -60,7 +73,12 @@ const SignOutButton = () => {
     <button
       type="button"
       className="btn btn-error bg-red-600 text-white"
-      onClick={() => signOut(auth)}
+      onClick={() =>
+        signOut(auth).then(() => {
+          localStorage.clear()
+          router.push("/")
+        })
+      }
     >
       sign out
     </button>
@@ -98,7 +116,6 @@ const UsernameForm = () => {
       if (username.length > 3) {
         const ref = doc(db, `usernames`, username)
         const docSnap = await getDoc(ref)
-        console.log("firestore read executed")
         setIsValid(!docSnap.exists())
         setLoading(false)
       }
