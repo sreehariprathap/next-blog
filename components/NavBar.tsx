@@ -54,7 +54,7 @@ const NavBar = () => {
       <div className="flex gap-5 justify-center items-center">
         <div className="my-2">
           <Link href={"/"}>
-            <Image src={logoBlack} width={125} height={75} />
+            <Image src={logoBlack} width={125} height={75} alt={"logo"} />
             {/* <p className="rounded-md bg-slate-900 text-2xl text-slate-100 p-2 m-1">
               Blog
             </p> */}

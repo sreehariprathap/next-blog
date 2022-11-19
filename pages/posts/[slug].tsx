@@ -1,9 +1,11 @@
+// @ts-nocheck
 import axios from "axios"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import Loader from "../../components/Loader"
 import PostSidebar from "../../components/postsidebar/PostSidebar"
 import Tags from "../../components/Tags"
+
 
 const PostComponent = () => {
   const [post, setPost] = useState(null)
