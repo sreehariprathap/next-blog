@@ -6,7 +6,6 @@ import {
   BookmarkIcon,
 } from "@heroicons/react/24/solid"
 import DeleteModal from "./DeleteModal"
-import axios from "axios"
 
 const PostFeed = (props: any) => {
   const readingTime = (content: string) => {

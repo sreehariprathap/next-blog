@@ -9,7 +9,7 @@ const Sidebar = (props: any) => {
     const id = localStorage.getItem("uid")
     axios
       .post(
-        "http://localhost:3000/api/users/bookmarks/get-reading-list-count",
+        `${process.env.API_URL}api/users/bookmarks/get-reading-list-count`,
         { id }
       )
       .then((res: any) => {

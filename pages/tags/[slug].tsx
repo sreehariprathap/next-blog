@@ -12,7 +12,8 @@ const PostsByTags = () => {
   useEffect(() => {
     setLoader(true)
     axios
-      .post("http://localhost:3000/api/posts/get-posts-by-tag", {
+      .post(
+        `${process.env.API_URL}api/posts/get-posts-by-tag`, {
         tag: slug,
       })
       .then((res: any) => {
@@ -25,7 +26,8 @@ const PostsByTags = () => {
     //Do something
     const id = localStorage.getItem("uid")
     axios
-      .post("http://localhost:3000/api/posts/feed", { userId: id })
+      .post(
+        `${process.env.API_URL}api/posts/feed`, { userId: id })
       .then((res: any) => {
         setPosts(res.data)
       })
@@ -34,7 +36,8 @@ const PostsByTags = () => {
   const bookmarkEvent = () => {
     const id = localStorage.getItem("uid")
     axios
-      .post("http://localhost:3000/api/posts/feed", { userId: id })
+      .post(
+        `${process.env.API_URL}api/posts/feed`, { userId: id })
       .then((res: any) => {
         setPosts(res.data)
       })

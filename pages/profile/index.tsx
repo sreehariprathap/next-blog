@@ -40,7 +40,8 @@ const profile = () => {
     const id = localStorage.getItem("uid")
     setBackGround(formValue)
     axios
-      .patch("http://localhost:3000/api/users/change-cover", {
+      .patch(
+        `${process.env.API_URL}api/users/change-cover`, {
         id: id,
         backGroundImageUrl: backGround,
       })
@@ -52,7 +53,8 @@ const profile = () => {
   useEffect(() => {
     setLoader(true)
     const id = localStorage.getItem("uid")
-    axios.get(`http://localhost:3000/api/users/${id}`).then((res: any) => {
+    axios.get(
+      `${process.env.API_URL}api/users/${id}`).then((res: any) => {
       setName(res.data.name)
       setPicture(res.data.imageUrl)
       if (res.data.backGroundImageUrl) {
@@ -78,7 +80,8 @@ const profile = () => {
     setLoader(true)
     const id = localStorage.getItem("uid")
     axios
-      .get(`http://localhost:3000/api/users/posts/${id}`)
+      .get(
+        `${process.env.API_URL}api/users/posts/${id}`)
       .then((res: any) => {
         // res.data.forEach((post: any) => {
         //   post.createdAt = new Date(post.createdAt)
@@ -239,7 +242,8 @@ const AddSocialForm = (props: any) => {
     const id = localStorage.getItem("uid")
     data.id = id
     axios
-      .patch("http://localhost:3000/api/users/add-social", data)
+      .patch(
+        `${process.env.API_URL}api/users/add-social`, data)
       .then((res) => {
         toast.success("links added successfully")
         setSocialForm(false)

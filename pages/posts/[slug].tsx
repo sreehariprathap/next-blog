@@ -13,7 +13,8 @@ const PostComponent = () => {
   const { slug } = router.query
   useEffect(() => {
     setLoader(true)
-    axios.get(`http://localhost:3000/api/posts/${slug}`).then((res: any) => {
+    axios.get(
+      `${process.env.API_URL}api/posts/${slug}`).then((res: any) => {
       setPost(res.data.feed)
       setAuthor(res.data.user)
       setLoader(false)
@@ -21,7 +22,7 @@ const PostComponent = () => {
   }, [])
 
   const likeEvent = () => {
-    axios.get(`http://localhost:3000/api/posts/${slug}`).then((res: any) => {
+    axios.get(`${process.env.API_URL}api/posts/${slug}`).then((res: any) => {
       setPost(res.data.feed)
       setAuthor(res.data.user)
     })
@@ -46,7 +47,7 @@ const PostComponent = () => {
           id={slug}
           isBookmarked={post.isBookmarked}
         />
-        <div className="w-11/12 px-4 ">
+        <div className="xsm:w-full lg:w-11/12 px-4 ">
           <div className="bg-white card mt-4 w-full shadow-md">
             {/* {post ? JSON.stringify(post) : "dude"} */}
             {post.imageUrl ? (

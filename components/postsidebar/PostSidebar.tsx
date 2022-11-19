@@ -11,7 +11,8 @@ import toast from "react-hot-toast"
 const PostSidebar = (props: any) => {
   const like = (id: string) => {
     axios
-      .patch("http://localhost:3000/api/posts/heart", { id: props.id })
+      .patch(
+        `${process.env.API_URL}api/posts/heart`, { id: props.id })
       .then(() => {
         toast.success("post liked")
       })
@@ -22,10 +23,9 @@ const PostSidebar = (props: any) => {
     like(props.id)
     props.likeFunction() // calling the method
   }
-  console.log(props)
 
   return (
-    <div className="sticky left-0 w-1/12  h-screen ">
+    <div className="sticky left-0 w-1/12  h-screen xsm:hidden lg:block">
       <div className="flex flex-col gap-7 p-5 mt-3">
         <div className="flex flex-col items-center">
           <HeartIcon

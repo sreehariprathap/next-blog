@@ -6,7 +6,8 @@ import Backbuttonbar from "../../components/Backbuttonbar"
 const index = () => {
   const [tags, setTags] = useState([])
   useEffect(() => {
-    axios.get("http://localhost:3000/api/tags").then((res: any) => {
+    axios.get(
+      `${process.env.API_URL}api/tags`).then((res: any) => {
       res.data.filter((tag: any) => tag.name != null)
       setTags(res.data)
     })

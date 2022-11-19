@@ -14,13 +14,14 @@ export default function Home() {
   const getPosts = (id: string) => {
     setLoader(true)
     axios
-      .post("http://localhost:3000/api/posts/feed", { userId: id })
+      .post(`${process.env.API_URL}api/posts/feed`, { userId: id })
       .then((res: any) => {
         setPosts(res.data)
         setLoader(false)
       })
   }
   useEffect(() => {
+    console.log(process.env.API_URL)
     const id = localStorage.getItem("uid")
     getPosts(id ? id : "0")
   }, [])
@@ -29,7 +30,7 @@ export default function Home() {
     //Do something
     const id = localStorage.getItem("uid")
     axios
-      .post("http://localhost:3000/api/posts/feed", { userId: id })
+      .post(`${process.env.API_URL}api/posts/feed`, { userId: id })
       .then((res: any) => {
         setPosts(res.data)
       })
@@ -38,7 +39,7 @@ export default function Home() {
   const bookmarkEvent = () => {
     const id = localStorage.getItem("uid")
     axios
-      .post("http://localhost:3000/api/posts/feed", { userId: id })
+      .post(`${process.env.API_URL}api/posts/feed`, { userId: id })
       .then((res: any) => {
         setPosts(res.data)
       })

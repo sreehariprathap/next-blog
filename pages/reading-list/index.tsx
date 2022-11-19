@@ -8,7 +8,8 @@ const index = () => {
   const [readingList, setReadingList] = useState([])
   const getBookMarks = (id: any) => {
     axios
-      .post("http://localhost:3000/api/users/bookmarks/get", { id: id })
+      .post(
+        `${process.env.API_URL}api/users/bookmarks/get`, { id: id })
       .then((res: any) => {
         setReadingList(res.data)
       })

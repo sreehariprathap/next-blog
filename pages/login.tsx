@@ -32,7 +32,8 @@ const SignInButton = () => {
       .then((result: any) => {
         var userData = result.user
         axios
-          .post("http://localhost:3000/api/users/create", {
+          .post(
+            `${process.env.API_URL}api/users/create`, {
             id: userData.uid,
             name: userData.displayName,
             email: userData.email,

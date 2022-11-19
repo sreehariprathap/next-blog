@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast"
 
 const DeleteModal = (props: any) => {
   const deletePost = (id: string) => {
-    axios.delete(`http://localhost:3000/api/posts/delete/${id}`).then(() => {
+    axios.delete(`${process.env.API_URL}api/posts/delete/${id}`).then(() => { 
       toast.success("post deleted successfully")
     })
   }

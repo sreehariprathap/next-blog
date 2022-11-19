@@ -6,7 +6,8 @@ const Tags = (props: any) => {
   useEffect(() => {
     const tags = props.tags
     axios
-      .post("http://localhost:3000/api/tags/get-tag-names", { tags })
+      .post(
+        `${process.env.API_URL}api/tags/get-tag-names`, { tags })
       .then((res: any) => {
         setTags(res.data)
       })

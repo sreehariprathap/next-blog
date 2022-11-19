@@ -26,28 +26,30 @@ const MobileCategory = () => {
           </Link>
         </li>
         <li className={styles.option}>
-          <Link href={"/"}>
+          <Link href={"reading-list"}>
             <div>
-              <span>📚 Reading List</span>
+              <span>
+                📚 Reading List
+              </span>
             </div>
           </Link>
         </li>
-        <li className={styles.option}>
+        {/* <li className={styles.option}>
           <Link href={"/"}>
             <div>
               <span>📃 Listings</span>
             </div>
           </Link>
-        </li>
+        </li> */}
         <li className={styles.option}>
-          <Link href={"/"}>
+          <Link href={"tags"}>
             <div>
               <span>🏷️ Tags</span>
             </div>
           </Link>
         </li>
         <li className={styles.option}>
-          <Link href={"/"}>
+          <Link href={"faq"}>
             <div>
               <span>💡 FAQ</span>
             </div>
@@ -65,13 +67,6 @@ const MobileCategory = () => {
           <Link href={"contact"}>
             <div>
               <span>📞 Contact</span>
-            </div>
-          </Link>
-        </li>
-        <li className={styles.option}>
-          <Link href={"/"}>
-            <div>
-              <span>🦮 Guides</span>
             </div>
           </Link>
         </li>

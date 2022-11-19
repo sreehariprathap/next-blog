@@ -41,7 +41,7 @@ const Feed = (props: any) => {
 
   const like = (id: string) => {
     axios
-      .patch("http://localhost:3000/api/posts/heart", { id: id })
+      .patch( `${process.env.API_URL}api/posts/heart`, { id: id })
       .then(() => {
         toast.success("post liked")
       })
@@ -52,7 +52,7 @@ const Feed = (props: any) => {
     const id = localStorage.getItem("uid")
     const postId = props.id
     axios
-      .post("http://localhost:3000/api/users/bookmarks/toggle-bookmark", {
+      .post(`${process.env.API_URL}api/users/bookmarks/toggle-bookmark`, {
         authorId: id,
         postId: postId,
       })

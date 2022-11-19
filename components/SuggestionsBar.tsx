@@ -16,17 +16,17 @@ const SuggestionsBar = () => {
 
   const getBookmarks = (id: any) => {
     axios
-      .post("http://localhost:3000/api/users/bookmarks/get", { id: id })
+      .post(
+        `${process.env.API_URL}api/users/bookmarks/get`, { id: id })
       .then((res: any) => {
-        console.log(res.data)
         setReadingList(res.data.slice(0, 4))
       })
   }
 
   const getTopics = () => {
-    axios.get("http://localhost:3000/api/tags").then((res: any) => {
+    axios.get(
+      `${process.env.API_URL}api/tags`).then((res: any) => {
       setTopics(res.data.slice(0, 4))
-      console.log(res.data.slice(0, 4))
     })
   }
 

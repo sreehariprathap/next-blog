@@ -19,7 +19,7 @@ const NavBar = () => {
   useEffect(() => {
     const userId = localStorage.getItem("uid")
     axios
-      .post("http://localhost:3000/api/posts/search-result", {
+      .post(`${process.env.API_URL}api/posts/search-result`, {
         userId: userId,
       })
       .then((res: any) => {

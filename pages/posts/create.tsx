@@ -38,7 +38,8 @@ const create = () => {
 
   // for getting the tags from db
   useEffect(() => {
-    axios.get("http://localhost:3000/api/tags").then((result) => {
+    axios.get(
+      `${process.env.API_URL}api/tags`).then((result) => {
       result.data.forEach((item: any) => {
         ;(item.value = item.id), (item.label = item.name)
       })
@@ -113,7 +114,8 @@ const create = () => {
                 data.authorId = userId
                 data.tags = selectedTags
                 axios
-                  .post("http://localhost:3000/api/posts/create", data)
+                  .post(
+                    `${process.env.API_URL}api/posts/create`, data)
                   .then((response) => {
                     toast.success("saved as draft")
                     router.push("/")
@@ -130,7 +132,8 @@ const create = () => {
                 data.imageUrl = formValue
                 data.tags = selectedTags
                 axios
-                  .post("http://localhost:3000/api/posts/create", data)
+                  .post(
+                    `${process.env.API_URL}api/posts/create`, data)
                   .then((response) => {
                     toast.success("posted successfully")
                     router.push("/")
