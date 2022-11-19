@@ -14,7 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       name: true,
     },
   })
-  const tags = await prisma.Tag.findMany({
+  const tags = await prisma.tag.findMany({
     select: {
       id: true,
       name: true,

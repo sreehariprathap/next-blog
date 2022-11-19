@@ -8,7 +8,6 @@ import { toast } from "react-hot-toast"
 import styles from "./createpost.module.scss"
 import makeAnimated from "react-select/animated"
 import CreatableSelect from "react-select/creatable"
-import LoaderAnimation from "../../components/LoaderAnimation"
 
 const create = () => {
   const { userId } = useContext(UserContext)
@@ -32,7 +31,8 @@ const create = () => {
   }
 
   // for getting the selected tags from select
-  const handleChange = (e: any | never) => {
+  const handleChange = (e:any) => {
+    // @ts-ignore
     setSelectedTags(Array.isArray(e) ? e.map((x) => x.value) : [])
   }
 

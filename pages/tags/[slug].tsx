@@ -1,11 +1,12 @@
 import axios from "axios"
 import Link from "next/link"
-import router from "next/router"
+import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import Feed from "../../components/Feed"
 import Loader from "../../components/Loader"
 
 const PostsByTags = () => {
+  const router = useRouter();
   const [posts, setPosts] = useState([])
   const [loader, setLoader] = useState(false)
   const { slug } = router.query

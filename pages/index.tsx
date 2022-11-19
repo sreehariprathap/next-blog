@@ -44,47 +44,50 @@ export default function Home() {
         setPosts(res.data)
       })
   }
-
+  if (loader) {
+    return <Loader show={loader} />
+  }
   return (
-    <div className={`${styles.container} h-full`}>
-      <Loader show={loader} />
-      <div className="flex gap-4">
-        <Sidebar />
-        <div className="w-full my-4 flex gap-4 flex-col">
-          {/* <PostFeedLayout /> */}
-          {posts ? (
-            posts.map((post: any) => {
-              return (
-                <>
-                  <Link href={`posts/${post.id}`}>
-                    <Feed
-                      postImage={post.imageUrl}
-                      title={post.title}
-                      key="{post.id}"
-                      content={post.content}
-                      heartCount={post.heartCount}
-                      comments={post.comments}
-                      id={post.id}
-                      date={post.createdAt}
-                      authorImage={post.authorImageUrl}
-                      tags={post.tags}
-                      author={post.authorName}
-                      likeFunction={likeEvent}
-                      isBookmarked={post.isBookmarked}
-                      bookmarkFunction={bookmarkEvent}
-                    />
-                  </Link>
-                </>
-              )
-            })
-          ) : (
-            <h2 className="text-center my-2 text-lg font-medium">
-              No posts to display
-            </h2>
-          )}
+    <>
+      <div className={`${styles.container} h-full`}>
+        <div className="flex gap-4">
+          <Sidebar />
+          <div className="w-full my-4 flex gap-4 flex-col">
+            {/* <PostFeedLayout /> */}
+            {posts ? (
+              posts.map((post: any) => {
+                return (
+                  <>
+                    <Link href={`posts/${post.id}`}>
+                      <Feed
+                        postImage={post.imageUrl}
+                        title={post.title}
+                        key="{post.id}"
+                        content={post.content}
+                        heartCount={post.heartCount}
+                        comments={post.comments}
+                        id={post.id}
+                        date={post.createdAt}
+                        authorImage={post.authorImageUrl}
+                        tags={post.tags}
+                        author={post.authorName}
+                        likeFunction={likeEvent}
+                        isBookmarked={post.isBookmarked}
+                        bookmarkFunction={bookmarkEvent}
+                      />
+                    </Link>
+                  </>
+                )
+              })
+            ) : (
+              <h2 className="text-center my-2 text-lg font-medium">
+                No posts to display
+              </h2>
+            )}
+          </div>
+          <SuggestionsBar />
         </div>
-        <SuggestionsBar />
       </div>
-    </div>
+    </>
   )
 }
